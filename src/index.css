@@ -2,3 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* banner-carosel custom height */
+.carousel .thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+
+.carousel .slide img {
+    max-height: 550px;  
+    width: auto;
+    object-fit: cover;
+}
