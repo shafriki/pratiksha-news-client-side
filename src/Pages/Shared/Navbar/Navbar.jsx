@@ -38,7 +38,7 @@ const Navbar = () => {
                 </ul>
                 </div>
                 <img src={news} alt="CrowdCube Logo" className="w-6 md:w-10" />
-                <a className="text-sm px-1 md:text-xl btn btn-ghost text-[#2AB7B1]">প্রতীক্ষা নিউজ</a>
+                <Link to='/' className="text-sm px-1 md:text-xl btn btn-ghost text-[#2AB7B1]">প্রতীক্ষা নিউজ</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 gap-5">
