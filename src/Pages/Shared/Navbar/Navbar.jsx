@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import news from '../../../assets/logo (1).png'
+import news from '../../../assets/logo (1).png';
+import { IoMdLogIn } from "react-icons/io";
+import { FaUserEdit } from "react-icons/fa";
+
 const Navbar = () => {
 
     const Links = <>
@@ -46,8 +49,8 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end flex gap-1 items-center">
-                <Link to='/login' className="btn bg-[#2AB7B1] text-white border-none">Login</Link>
-                <Link to='/register' className="btn bg-[#2AB7B1] text-white border-none">Register</Link>
+                <Link to='/login' className="btn btn-ghost px-1 text-white border-none"><IoMdLogIn />Login</Link>
+                <Link to='/register' className="btn btn-ghost px-1 text-white border-none"><FaUserEdit />Register</Link>
             </div>
         </div>
         </div>
