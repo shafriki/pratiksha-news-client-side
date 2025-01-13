@@ -19,6 +19,18 @@ const Register = () => {
     AOS.init(); 
   }, []);
 
+   // form submit handler
+   const handleSubmit = async event => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = form.image.files[0];
+
+    console.log({ name, email, password, image }); 
+  }
+
   return (
     <div
       className="relative bg-fixed min-h-screen bg-cover bg-center overflow-auto flex items-center justify-center"
@@ -32,7 +44,7 @@ const Register = () => {
       {/* Register form */}
       <div
         className="w-full max-w-xl mx-3 md:mx-0 mt-14 p-8 bg-white bg-opacity-20 backdrop-blur-sm rounded-md shadow-lg z-10"
-        data-aos="fade-down" 
+        data-aos="fade-up" 
         data-aos-duration="1000" 
       >
         <h2 className="text-3xl font-bold text-center text-white mb-2">
@@ -42,16 +54,19 @@ const Register = () => {
           Join us in making a difference!
         </p>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative flex items-center mt-4">
             <span className="absolute">
               <FaUserCircle className="ml-3 text-gray-600 text-2xl" />
             </span>
             <input
               type="text"
+              name="name"
+              id="name"
               className="block text-sm w-full py-3 text-gray-700 bg-white border rounded-lg px-11"
               placeholder="Enter Your Name"
               required
+              autoComplete="name"
             />
           </div>
 
@@ -61,9 +76,12 @@ const Register = () => {
             </span>
             <input
               type="email"
+              name="email"
+              id="email"
               className="block text-sm w-full py-3 text-gray-700 bg-white border rounded-lg px-11"
               placeholder="Enter Your Email"
               required
+              autoComplete="email"
             />
           </div>
 
@@ -78,6 +96,7 @@ const Register = () => {
               accept="image/*"
               className="block text-sm w-full py-3 text-gray-700 bg-white border rounded-lg px-11"
               required
+              autoComplete="image"
             />
 
           </div>
@@ -91,9 +110,12 @@ const Register = () => {
             </span>
             <input
               type={passwordVisible ? "text" : "password"}
+              name="password"
+              id="password"
               className="block text-sm w-full px-10 py-3 text-gray-700 bg-white border rounded-lg"
               placeholder="Enter New Password"
               required
+              autoComplete="new-password"
             />
           </div>
 
