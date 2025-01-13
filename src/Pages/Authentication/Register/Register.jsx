@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { MdAddAPhoto, MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import AOS from "aos";
 import "aos/dist/aos.css"; 
+import useAuth from "../../../Hooks/useAuth";
+import { imageUpload, saveUser } from "../../../api/utils";
 
 const Register = () => {
+  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
+  const navigate = useNavigate()
+
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -28,7 +33,42 @@ const Register = () => {
     const password = form.password.value;
     const image = form.image.files[0];
 
-    console.log({ name, email, password, image }); 
+    console.log({ name, email, password, image });
+
+    // 1. Send image data to imgbb or use a default image
+    const photoURL = image ? await imageUpload(image) : 'https://example.com/default-avatar.jpg';
+
+    try {
+        // 2. User Registration
+        const result = await createUser(email, password);
+
+        // 3. Save username & profile photo
+        await updateUserProfile(name, photoURL);
+        console.log(result);
+
+        // Save user info in DB if the user is new
+        await saveUser({ ...result?.user, displayName: name, photoURL });
+        navigate('/');
+        toast.success('Signup Successful');
+    } catch (err) {
+        console.log(err);
+        toast.error(err?.message);
+    }
+};
+
+
+  // Handle Google Signin
+  const handleGoogleSignIn = async () => {
+    try {
+      //User Registration using google
+      const data = await signInWithGoogle()
+      await saveUser(data?.user)
+      navigate('/')
+      toast.success('Signup Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
   }
 
   return (
@@ -130,7 +170,7 @@ const Register = () => {
           <div className="flex-grow border-t border-gray-400"></div>
         </div>
 
-        <button
+        <button onClick={handleGoogleSignIn}
           type="button"
           className="w-full px-4 py-2 font-semibold text-white bg-[#0f162f] hover:bg-[#070A16] ease-in-out btn border-none rounded-md"
         >
