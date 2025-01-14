@@ -14,6 +14,7 @@ import ViewAllArticles from "../Pages/All Articles/ViewAllArticles";
 import MyArticles from "../Pages/My Articles/MyArticles";
 import Subscription from "../Pages/Subscription/Subscription";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
 
@@ -61,7 +62,7 @@ export const router = createBrowserRouter([
   // dashboard
   {
     path: '/dashboard',
-    element: <DashboardLayout></DashboardLayout>,
+    element: <AdminRoute><DashboardLayout></DashboardLayout></AdminRoute>,
     children: [
       {
         path: 'statistics',

@@ -10,7 +10,7 @@ const DashboardNav = () => {
                 <div className="dropdown z-10 dropdown-hover dropdown-bottom dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-7 md:w-10 rounded-full" title="User Name">
-                            <img alt="User Name" src="https://via.placeholder.com/150" />
+                            <img alt="User Name" src="https://i.ibb.co.com/mvJmjx6/placeholder.jpg" />
                         </div>
                     </div>
                     <ul tabIndex={0} className="dropdown-content space-y-2 z-[1] menu shadow bg-base-100 rounded-box w-56">
