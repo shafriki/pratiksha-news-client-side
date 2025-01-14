@@ -5,18 +5,25 @@ import { IoMdLogIn } from "react-icons/io";
 import { FaUserEdit } from "react-icons/fa";
 import avatarImg from '../../../assets/placeholder.jpg';
 import useAuth from '../../../Hooks/useAuth';
+import useRole from '../../../Hooks/useRole';  
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const [role, isLoading] = useRole();  
 
     const Links = <>
+
         <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
         <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
         <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
         <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
         <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
         <NavLink to='/premium-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Premium Articles</NavLink>
-        <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
+        
+        {/* only for admin */}
+        {role === 'admin' && (
+            <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
+        )}
     </>;
 
     return (
@@ -67,7 +74,6 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <button onClick={logOut} className="btn bg-teal-500 border-none px-4 hover:bg-[#2AB7B1] text-sm text-white hidden md:block">Log Out</button>
-
                         </>
                     ) : (
                         <>
