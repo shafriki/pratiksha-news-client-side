@@ -8,6 +8,11 @@ import AllUsers from "../Pages/Dashboard/AllUsers";
 import Statistics from "../Pages/Dashboard/Statistics";
 import AllPublishers from "../Pages/Dashboard/AllPublishers";
 import AllArticles from "../Pages/Dashboard/AllArticles";
+import AddArticles from "../Pages/Add Articles/AddArticles";
+import PremiumArticles from "../Pages/Premium Articles/PremiumArticles";
+import ViewAllArticles from "../Pages/All Articles/ViewAllArticles";
+import MyArticles from "../Pages/My Articles/MyArticles";
+import Subscription from "../Pages/Subscription/Subscription";
 
 export const router = createBrowserRouter([
 
@@ -28,6 +33,26 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: 'add-articles',
+        element: <AddArticles></AddArticles>,
+      },
+      {
+        path: 'subscriptions',
+        element: <Subscription></Subscription>,
+      },
+      {
+        path: 'my-articles',
+        element: <MyArticles></MyArticles>,
+      },
+      {
+        path: 'all-articles',
+        element: <ViewAllArticles></ViewAllArticles>,
+      },
+      {
+        path: 'premium-articles',
+        element: <PremiumArticles></PremiumArticles>,
       },
     ]
   },
