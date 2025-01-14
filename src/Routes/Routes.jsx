@@ -5,6 +5,9 @@ import Login from "../Pages/Authentication/Login/Login";
 import Register from "../Pages/Authentication/Register/Register";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import AllUsers from "../Pages/Dashboard/AllUsers";
+import Statistics from "../Pages/Dashboard/Statistics";
+import AllPublishers from "../Pages/Dashboard/AllPublishers";
+import AllArticles from "../Pages/Dashboard/AllArticles";
 
 export const router = createBrowserRouter([
 
@@ -35,9 +38,21 @@ export const router = createBrowserRouter([
     element: <DashboardLayout></DashboardLayout>,
     children: [
       {
+        path: 'statistics',
+        element: <Statistics></Statistics>,
+      },
+      {
         path: 'all-users',
-        element: <AllUsers></AllUsers>
-      }
+        element: <AllUsers></AllUsers>,
+      },
+      {
+        path: 'all-publishers',
+        element: <AllPublishers></AllPublishers>,
+      },
+      {
+        path: 'all-articles',
+        element: <AllArticles></AllArticles>,
+      },
     ]
   },
 ]);
