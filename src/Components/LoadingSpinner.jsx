@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
-import { ScaleLoader } from 'react-spinners'
+import { FadeLoader } from 'react-spinners'
 
 const LoadingSpinner = ({ smallHeight }) => {
   return (
     <div
-      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}
-      flex 
-      flex-col 
-      justify-center 
-      items-center `}
+      className={` ${smallHeight ? 'h-[250px]' : 'h-[70vh]'}`}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
     >
-      <ScaleLoader size={100} color='lime' />
+      <FadeLoader color="#2AB7B1" />
     </div>
   )
 }
