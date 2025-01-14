@@ -77,7 +77,7 @@ const Sidebar = () => {
             </Link>
             <Link to='all-publishers' className={getLinkClass('/all-publishers')}>
               <FaUserTie className='w-5 h-5' />
-              <span className='mx-4 font-medium'>All Publishers</span>
+              <span className='mx-4 font-medium'>Add Publishers</span>
             </Link>
           </div>
         </div>
