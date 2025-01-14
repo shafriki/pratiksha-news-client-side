@@ -13,6 +13,7 @@ import PremiumArticles from "../Pages/Premium Articles/PremiumArticles";
 import ViewAllArticles from "../Pages/All Articles/ViewAllArticles";
 import MyArticles from "../Pages/My Articles/MyArticles";
 import Subscription from "../Pages/Subscription/Subscription";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
 
@@ -36,15 +37,15 @@ export const router = createBrowserRouter([
       },
       {
         path: 'add-articles',
-        element: <AddArticles></AddArticles>,
+        element: <PrivateRoute><AddArticles></AddArticles></PrivateRoute>,
       },
       {
         path: 'subscriptions',
-        element: <Subscription></Subscription>,
+        element: <PrivateRoute><Subscription></Subscription></PrivateRoute>,
       },
       {
         path: 'my-articles',
-        element: <MyArticles></MyArticles>,
+        element: <PrivateRoute><MyArticles></MyArticles></PrivateRoute>,
       },
       {
         path: 'all-articles',
@@ -52,7 +53,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'premium-articles',
-        element: <PremiumArticles></PremiumArticles>,
+        element: <PrivateRoute><PremiumArticles></PremiumArticles></PrivateRoute>,
       },
     ]
   },
