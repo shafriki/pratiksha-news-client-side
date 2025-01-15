@@ -1,9 +1,207 @@
-import React from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiousSecure';
 
 const AllArticles = () => {
+    const axiosSecure = useAxiosSecure();
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    // Fetch articles from API
+    const { data: articles = [], isLoading, refetch } = useQuery({
+        queryKey: ['articles'],
+        queryFn: async () => {
+            const authToken = localStorage.getItem("authToken"); // Get the authToken from localStorage
+
+            // Make the request with Authorization header
+            const { data } = await axiosSecure('/articles-req', {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,  // Add the token in the headers
+                },
+            });
+
+            return data.map(article => ({
+                ...article,
+                status: article.approved ? 'Approved' : article.approved === false ? 'Rejected' : 'Pending',
+            }));
+        }
+    });
+
+    // Handle approve action
+    const handleApproveArticle = (article) => {
+        const authToken = localStorage.getItem("authToken"); // Get the authToken
+
+        axiosSecure.patch(`/approve-article/${article._id}`, {
+            isApproved: true
+        }, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,  // Add the token in the headers
+            },
+        })
+        .then(res => {
+            refetch();
+            if (res.data.modifiedCount > 0) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Article Approved!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        })
+        .catch(err => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Failed to approve article!',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        });
+    };
+
+    // Handle reject action
+    const handleRejectArticle = (article) => {
+        const authToken = localStorage.getItem("authToken"); // Get the authToken
+
+        axiosSecure.patch(`/approve-article/${article._id}`, {
+            isApproved: false
+        }, {
+            headers: {
+                Authorization: `Bearer ${authToken}`,  // Add the token in the headers
+            },
+        })
+        .then(res => {
+            refetch();
+            if (res.data.modifiedCount > 0) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Article Rejected!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        })
+        .catch(err => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Failed to reject article!',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        });
+    };
+
+    // Pagination logic
+    const indexOfLastArticle = currentPage * itemsPerPage;
+    const indexOfFirstArticle = indexOfLastArticle - itemsPerPage;
+    const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
+
+    const totalPages = Math.ceil(articles.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prevPage => prevPage - 1);
+        }
+    };
+
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    if (isLoading) {
+        return (
+            <div className="text-center my-10 md:my-20">
+                <span className="loading loading-bars loading-lg"></span>
+            </div>
+        );
+    }
+
     return (
         <div>
-            all articles
+            <h2 className="text-xl md:text-3xl text-center font-bold mb-5">All Articles</h2>
+            <div className="overflow-x-auto shadow-lg">
+                <table className="table">
+                    <thead className="bg-[#ddf5f3]">
+                        <tr>
+                            <th></th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentArticles.map((article, idx) => (
+                            <tr key={article._id}>
+                                <th>{indexOfFirstArticle + idx + 1}</th>
+                                <td>{article.title}</td>
+                                <td>{article.category}</td>
+                                <td>{article.author}</td>
+                                <td className={article.status === 'Approved' ? 'text-green-600' : article.status === 'Rejected' ? 'text-red-600' : 'text-yellow-600'}>
+                                    {article.status}
+                                </td>
+                                <th>
+                                    {article.status !== 'Pending' ? (
+                                        <>
+                                            <button disabled className="btn btn-xs bg-transparent text-green-600">Approve</button>
+                                            <button disabled className="btn btn-xs bg-transparent text-red-600">Reject</button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <button onClick={() => handleApproveArticle(article)} className="btn btn-xs bg-transparent text-green-600">Approve</button>
+                                            <button onClick={() => handleRejectArticle(article)} className="btn btn-xs bg-transparent text-red-600">Reject</button>
+                                        </>
+                                    )}
+                                </th>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="flex justify-between items-center mt-8 space-y-2">
+                <div className="text-left">
+                    <p className='text-xs md:text-base text-[#52a09a] font-semibold'>
+                        Showing {indexOfFirstArticle + 1} to {indexOfLastArticle > articles.length ? articles.length : indexOfLastArticle} of {articles.length} results
+                    </p>
+                </div>
+                <div className="flex justify-center items-center space-x-2">
+                    <button
+                        className={`px-3 py-1 border rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-[#66c0b8]'}`}
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                    >
+                        Prev
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            className={`px-3 py-1 border rounded ${currentPage === index + 1 ? 'bg-[#105852] text-white' : 'bg-white text-[#ddf5f3]'}`}
+                            onClick={() => handlePageClick(index + 1)}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        className={`px-3 py-1 border rounded ${currentPage === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-[#1d7b74]'}`}
+                        onClick={handleNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        Next
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };

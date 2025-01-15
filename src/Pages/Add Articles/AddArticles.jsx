@@ -93,7 +93,7 @@ const AddArticles = () => {
         setSelectedPublisher(null);
         Swal.fire({
           title: 'Success!',
-          text: 'Article added successfully.',
+          text: 'Article submitted successfully and is pending admin approval. It will appear on the articles page once approved.',
           icon: 'success',
           confirmButtonText: 'OK',
         });
