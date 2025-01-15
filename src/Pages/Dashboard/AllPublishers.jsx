@@ -6,7 +6,7 @@ import useAxiosSecure from "../../Hooks/useAxiousSecure";
 
 const AllPublishers = () => {
   const [loading, setLoading] = useState(false);
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();  // Use axiosSecure from your custom hook
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,22 +17,27 @@ const AllPublishers = () => {
     try {
       setLoading(true);
 
-      // Upload image and get URL
+      // Upload image and get photo URL
       const photoURL = image ? await imageUpload(image) : "https://example.com/default-avatar.jpg";
 
-      // Send data to the backend (like the demo code)
+      // Send POST request to backend
       const response = await axiosSecure.post(
-        "/publishers", // Assuming the endpoint is "/menu" based on your demo code
-        { name, photoURL }, // The data being sent
+        "/publishers", 
+        { name, photoURL }, 
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you need to pass token for authentication
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,  // Attach the token if necessary
           },
         }
       );
 
-      console.log("Publisher added successfully:", response.data);
-      form.reset(); // Clear form after submission
+      // Check if the response indicates success
+      if (response?.data?.success) {  // Check if 'success' is true in the response
+        console.log("Publisher added successfully:", response.data);
+        form.reset();  // Reset form after successful submission
+      } else {
+        console.error("Error: Publisher addition failed", response?.data?.message || "Unknown error");
+      }
     } catch (err) {
       console.error("Error adding publisher", err);
     } finally {

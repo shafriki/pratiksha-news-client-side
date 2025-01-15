@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import Swal from 'sweetalert2';
-import { FaSearch } from 'react-icons/fa';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
 
 const AllUsers = () => {
