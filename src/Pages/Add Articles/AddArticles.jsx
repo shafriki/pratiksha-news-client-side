@@ -54,6 +54,9 @@ const AddArticles = () => {
     const description = form.description.value;
     const tags = selectedTags.map((tag) => tag.value);
     const image = form.image.files[0];
+    const authorName = form.authorName.value;
+    const authorPhoto = form.authorPhoto.files[0];
+    const postedDate = form.postedDate.value;
 
     if (!selectedPublisher) {
       Swal.fire({
@@ -69,6 +72,7 @@ const AddArticles = () => {
       setLoading(true);
 
       const photoURL = image ? await imageUpload(image) : 'https://example.com/default-image.jpg';
+      const authorPhotoURL = authorPhoto ? await imageUpload(authorPhoto) : 'https://example.com/default-author-photo.jpg';
 
       const response = await axiosSecure.post(
         '/articles-req',
@@ -78,7 +82,10 @@ const AddArticles = () => {
           description,
           tags,
           photoURL,
-          email: user?.email, // Include user email in the data sent to the backend
+          email: user?.email,
+          authorName,
+          authorPhotoURL,
+          postedDate,
         },
         {
           headers: {
@@ -195,6 +202,37 @@ const AddArticles = () => {
               className="w-full border border-gray-300 p-2 rounded"
               placeholder="Enter article description"
               rows="5"
+              required
+            />
+          </div>
+          {/* Author Name Input */}
+          <div className="mb-4">
+            <label className="block font-medium mb-2">Author Name</label>
+            <input
+              type="text"
+              name="authorName"
+              className="w-full border border-gray-300 p-2 rounded"
+              placeholder="Enter author name"
+              required
+            />
+          </div>
+          {/* Author Photo Input */}
+          <div className="mb-4">
+            <label className="block font-medium mb-2">Author Photo</label>
+            <input
+              type="file"
+              name="authorPhoto"
+              className="w-full border border-gray-300 p-2 rounded"
+              required
+            />
+          </div>
+          {/* Posted Date Input */}
+          <div className="mb-4">
+            <label className="block font-medium mb-2">Posted Date</label>
+            <input
+              type="date"
+              name="postedDate"
+              className="w-full border border-gray-300 p-2 rounded"
               required
             />
           </div>

@@ -134,21 +134,36 @@ const AllArticles = () => {
                 <table className="table">
                     <thead className="bg-[#ddf5f3]">
                         <tr>
-                            <th></th>
+                            <th>SL. No.</th>
+                            <th>Author Name</th>
+                            <th>Author Image</th>
                             <th>Title</th>
-                            <th>Category</th>
-                            <th>Author</th>
+                            <th>Author Email</th>
+                            <th>Posted Dated</th>
+                            <th>Publisher</th>
                             <th>Status</th>
                             <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         {currentArticles.map((article, idx) => (
                             <tr key={article._id}>
                                 <th>{indexOfFirstArticle + idx + 1}</th>
-                                <td>{article.title}</td>
-                                <td>{article.category}</td>
-                                <td>{article.author}</td>
+                                <td>{article.authorName}</td>
+                                <td>
+                                    <img 
+                                        src={article.authorPhotoURL || 'default-image-url'} 
+                                        alt="Author" 
+                                        className="w-10 h-10 rounded-full" 
+                                    /> {/* Display author's image */}
+                                </td>
+                                <td>{article.title}</td> 
+
+                                <td>{article.email}</td>
+                                <td>{article.postedDate}</td>
+                                <td>{article.publisher}</td>
+                                
                                 <td className={article.status === 'Approved' ? 'text-green-600' : article.status === 'Rejected' ? 'text-red-600' : 'text-yellow-600'}>
                                     {article.status}
                                 </td>
