@@ -3,10 +3,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdAddAPhoto } from "react-icons/md";
 import { imageUpload } from "../../api/utils";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
+import Swal from "sweetalert2";  
+import { BeatLoader } from "react-spinners";
+
 
 const AllPublishers = () => {
   const [loading, setLoading] = useState(false);
-  const axiosSecure = useAxiosSecure();  // Use axiosSecure from your custom hook
+  const axiosSecure = useAxiosSecure(); 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,7 +20,6 @@ const AllPublishers = () => {
     try {
       setLoading(true);
 
-      // Upload image and get photo URL
       const photoURL = image ? await imageUpload(image) : "https://example.com/default-avatar.jpg";
 
       // Send POST request to backend
@@ -35,11 +37,28 @@ const AllPublishers = () => {
       if (response?.data?.success) {  // Check if 'success' is true in the response
         console.log("Publisher added successfully:", response.data);
         form.reset();  // Reset form after successful submission
+        
+        // Show SweetAlert in the center after successful submission
+        Swal.fire({
+          title: "Success!",
+          text: "Publisher added successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+          position: "center", // This ensures the alert is centered
+        });
       } else {
         console.error("Error: Publisher addition failed", response?.data?.message || "Unknown error");
       }
     } catch (err) {
       console.error("Error adding publisher", err);
+      // Show SweetAlert error in case of failure
+      Swal.fire({
+        title: "Error!",
+        text: "Something went wrong while adding the publisher.",
+        icon: "error",
+        confirmButtonText: "OK",
+        position: "center",
+      });
     } finally {
       setLoading(false);
     }
@@ -79,7 +98,7 @@ const AllPublishers = () => {
           className="w-full py-2 text-white bg-gray-500 hover:bg-gray-600 rounded-md"
           disabled={loading}
         >
-          {loading ? "Adding..." : "Add Publisher"}
+          {loading ? <BeatLoader size={10} color="#ffffff" /> : "Add Publisher"}
         </button>
       </form>
     </div>
