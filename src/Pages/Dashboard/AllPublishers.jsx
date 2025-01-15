@@ -6,37 +6,33 @@ import useAxiosSecure from "../../Hooks/useAxiousSecure";
 
 const AllPublishers = () => {
   const [loading, setLoading] = useState(false);
-  const axiosSecure = useAxiosSecure(); // Get the instance of axios with secure headers
+  const axiosSecure = useAxiosSecure();
 
-  // Handle form submit
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const image = form.image.files[0];
 
-    // Log the form data
-    console.log({ name, image });
-
     try {
       setLoading(true);
 
-      // Upload image to imgBB (or other service)
+      // Upload image and get URL
       const photoURL = image ? await imageUpload(image) : "https://example.com/default-avatar.jpg";
 
-      // Prepare the data to be sent to the backend
-      const publisherData = { name, photoURL };
-
-      // Send data to the backend using axiosSecure with the Authorization header
-      const response = await axiosSecure.post('/publishers', publisherData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}` // Ensure token is included in the request
+      // Send data to the backend (like the demo code)
+      const response = await axiosSecure.post(
+        "/publishers", // Assuming the endpoint is "/menu" based on your demo code
+        { name, photoURL }, // The data being sent
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you need to pass token for authentication
+          },
         }
-      });
+      );
 
-      // Handle the response (successful data submission)
       console.log("Publisher added successfully:", response.data);
-      
+      form.reset(); // Clear form after submission
     } catch (err) {
       console.error("Error adding publisher", err);
     } finally {
@@ -46,44 +42,36 @@ const AllPublishers = () => {
 
   return (
     <div className="max-w-screen-sm mx-auto">
-      <h3 className="text-center text-xl md:text-3xl font-bold mb-10 md:mb-20">Add Publishers</h3>
-      <form onSubmit={handleSubmit} className="space-y-4 bg-[#66c0b8] rounded-md p-4 md:p-10">
-        {/* Name input */}
-        <div className="relative flex items-center mt-4">
-          <span className="absolute">
-            <FaUserCircle className="ml-3 text-gray-600 text-2xl" />
-          </span>
+      <h3 className="text-center text-xl md:text-3xl font-bold mb-10">Add Publisher</h3>
+      <form onSubmit={handleSubmit} className="space-y-4 bg-[#66c0b8] rounded-md p-6">
+        {/* Name Input */}
+        <div className="relative">
+          <FaUserCircle className="absolute left-3 top-3 text-gray-600 text-2xl" />
           <input
             type="text"
             name="name"
-            id="name"
-            className="block text-sm w-full py-3 text-gray-700 bg-white border rounded-lg px-11"
+            className="w-full py-3 pl-10 pr-3 text-sm border rounded-lg"
             placeholder="Enter Publisher's Name"
             required
-            autoComplete="name"
           />
         </div>
 
-        {/* Image input */}
-        <div className="relative flex items-center mt-4">
-          <span className="absolute">
-            <MdAddAPhoto className="ml-3 text-gray-600 text-2xl" />
-          </span>
+        {/* Image Input */}
+        <div className="relative">
+          <MdAddAPhoto className="absolute left-3 top-3 text-gray-600 text-2xl" />
           <input
             type="file"
-            id="image"
             name="image"
             accept="image/*"
-            className="block text-sm w-full py-3 text-gray-700 bg-white border rounded-lg px-11"
+            className="w-full py-3 pl-10 pr-3 text-sm border rounded-lg"
             required
-            autoComplete="image"
           />
         </div>
 
-        {/* Submit button */}
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full px-4 py-2 font-semibold text-white bg-gray-500 hover:bg-gray-600 ease-in-out btn border-none rounded-md"
+          className="w-full py-2 text-white bg-gray-500 hover:bg-gray-600 rounded-md"
           disabled={loading}
         >
           {loading ? "Adding..." : "Add Publisher"}
