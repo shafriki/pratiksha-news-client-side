@@ -22,38 +22,45 @@ const AllUsers = () => {
     });
 
     // Make Admin handler
-    const handleMakeAdmin = (user) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to undo this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#a38bbf",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Make Admin!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosSecure
-                    .patch(`/users/admin/${user._id}`, null, {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-                        },
-                    })
-                    .then((res) => {
-                        if (res.data.modifiedCount > 0) {
-                            Swal.fire({
-                                position: "top-end",
-                                icon: "success",
-                                title: `${user.name} is now an admin!`,
-                                showConfirmButton: false,
-                                timer: 1500,
-                            });
-                            refetch();
-                        }
-                    });
-            }
-        });
-    };
+    // PATCH Request to promote user to admin
+const handleMakeAdmin = (user) => {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to undo this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#a38bbf",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Make Admin!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            axiosSecure
+                .patch(`/users/admin/${user._id}`, { role: "admin" }, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+                    },
+                })
+                .then((res) => {
+                    if (res.data.modifiedCount > 0) {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: `${user.name} is now an admin!`,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+                        refetch(); // Refresh the users list
+                    } else {
+                        Swal.fire("Error", "Failed to make the user an admin.", "error");
+                    }
+                })
+                .catch((err) => {
+                    Swal.fire("Error", err.message, "error");
+                });
+        }
+    });
+};
+
 
     // Pagination logic
     const totalUsers = users.length;
