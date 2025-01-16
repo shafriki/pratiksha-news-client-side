@@ -53,24 +53,51 @@ const ArticleDetails = () => {
         </div>
       </Parallax>
 
-      <div className="max-w-4xl mx-auto my-10 p-4 bg-gray-100 shadow-lg rounded-lg">
-      <h1 className="text-2xl font-bold mb-4">{article.title}</h1>
-      <img src={article.photoURL} alt={article.title} className="w-full h-96 object-cover rounded-lg mb-6" />
-      <div className="text-sm text-gray-500 mb-4">
-        <p>
-          <span className="font-bold">Publisher:</span> {article.publisher}
-        </p>
-        <p>
-          <span className="font-bold">Author:</span> {article.authorName}
-        </p>
-        <p>
-          <span className="font-bold">Posted On:</span> {article.postedDate}
-        </p>
-      </div>
-      <div className="text-gray-700">
-        <p>{article.description}</p>
-      </div>
+      {/* articles details card */}
+    <div className="mx-auto flex flex-col md:flex-row justify-between w-full gap-12 p-6 cursor-pointer group my-10">
+    {/* Header */}
+    <div className="flex flex-col gap-6 flex-1">
+        <div>
+        <div className="w-full overflow-hidden rounded-md">
+            <img
+            className="object-cover w-full h-[35rem] group-hover:scale-110 transition"
+            src={article.
+                photoURL}
+            alt="header image"
+            />
+        </div>
+        </div>
     </div>
+    <div className="md:gap-10 flex-1 ">
+        {/* Article Info */}
+        <h2 className="text-3xl font-bold text-gray-800">{article.title}</h2>
+        <hr className="my-6" />
+        <div className="text-xs md:text-lg font-light text-justify text-neutral-500">
+        {article.description}
+        </div>
+        <hr className="my-6" />
+        <div className="text-lg text-neutral-900 font-light flex flex-row items-center gap-2">
+        <div><span className='font-semibold'>Reporter:</span> {article.authorName}</div>
+        <img
+            className="rounded-full w-10 h-10"
+            alt="Avatar"
+            referrerPolicy="no-referrer"
+            src={article.authorPhotoURL}
+        />
+        </div>
+        <hr className="my-6" />
+        <div>
+        <p className="gap-4 font-light text-neutral-500">
+        <span className='font-semibold'>Publisher:</span> {article.publisher}
+        </p>
+        <p className="gap-4 font-light text-neutral-500">
+        <span className='font-semibold'>Posted Date:</span> {article.postedDate}
+        </p>
+        </div>
+        <hr className="my-6" />
+    </div>
+    </div>
+
     </div>
   );
 };
