@@ -15,6 +15,7 @@ import MyArticles from "../Pages/My Articles/MyArticles";
 import Subscription from "../Pages/Subscription/Subscription";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import Profile from "../Pages/Profile";
 
 export const router = createBrowserRouter([
 
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
+      },
+      {
+        path: '/profile',
+        element: <Profile></Profile>,
       },
       {
         path: '/login',
