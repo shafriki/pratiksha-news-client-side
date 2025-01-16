@@ -4,6 +4,7 @@ import Banner from '../Banner/Banner';
 import Latest from '../Latest/Latest';
 import TopNews from '../TopNews/TopNews';
 import Publishers from '../Publishers/Publishers';
+import Trending from '../../Trending Articles/Trending';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
             <Latest></Latest>
             <TopNews></TopNews>
             <Publishers></Publishers>
+            <Trending></Trending>
         </div>
     );
 };
