@@ -11,6 +11,7 @@ import useAuth from "../../../Hooks/useAuth";
 import { imageUpload, saveUser } from "../../../api/utils";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BeatLoader } from 'react-spinners';
 
 const Register = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
@@ -190,7 +191,7 @@ const Register = () => {
           </div>
 
           <button className="w-full px-4 py-2 font-semibold text-white bg-[#2AB7B1] hover:bg-[#1c7975] ease-in-out btn border-none rounded-md">
-            Register
+          {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Register'}
           </button>
         </form>
 

@@ -43,7 +43,7 @@ const handleMakeAdmin = (user) => {
                 .then((res) => {
                     if (res.data.modifiedCount > 0) {
                         Swal.fire({
-                            position: "top-end",
+                            position: "center",
                             icon: "success",
                             title: `${user.name} is now an admin!`,
                             showConfirmButton: false,

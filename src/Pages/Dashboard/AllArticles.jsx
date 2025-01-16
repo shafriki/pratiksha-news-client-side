@@ -12,7 +12,7 @@ const AllArticles = () => {
     // Function to get the first 5 words
     const getFirstFiveWords = (str) => {
         const words = str.split(' ');
-        return words.slice(0, 5).join(' ') + (words.length > 5 ? '...' : '');
+        return words.slice(0, 3).join(' ') + (words.length > 3 ? '...' : '');
     };
 
     // Fetch articles from API
@@ -48,7 +48,7 @@ const AllArticles = () => {
             refetch();
             if (res.data.modifiedCount > 0) {
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: 'Article Approved!',
                     showConfirmButton: false,
@@ -58,7 +58,7 @@ const AllArticles = () => {
         })
         .catch(err => {
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'error',
                 title: 'Failed to approve article!',
                 showConfirmButton: false,
