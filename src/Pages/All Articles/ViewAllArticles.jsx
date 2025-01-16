@@ -11,6 +11,7 @@ import img2 from '../../assets/2.png';
 import img3 from '../../assets/3.png';
 import Latest from '../Home/Latest/Latest';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import { Link } from 'react-router-dom';
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -200,7 +201,8 @@ const ViewAllArticles = () => {
                       {truncateDescription(article.description, 30)}
                     </p>
 
-                    <button className="btn w-full bg-[#02faee]">See More</button>
+                    <Link to={`/articles-details/${article._id}`} className="btn w-full bg-[#02faee]">See More</Link>
+
                   </div>
                 </div>
               ))}
