@@ -11,43 +11,48 @@ const ViewAllArticles = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [selectedPublisher, setSelectedPublisher] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
+  const [publishers, setPublishers] = useState([]); 
 
-  // Debounce the searchTerm
+  useEffect(() => {
+    const fetchPublishers = async () => {
+      try {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/publishers`);
+        setPublishers(data); 
+      } catch (error) {
+        console.error('Error fetching publishers:', error);
+      }
+    };
+    fetchPublishers();
+  }, []);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 500); // Debounce delay (in milliseconds)
+    }, 500); 
 
-    // Cleanup the timeout if the component is unmounted or searchTerm changes
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Fetch articles with the debounced search term
   const { data: articles = [], isLoading, isError } = useQuery({
-    queryKey: ['approvedArticles', debouncedSearchTerm], // Use debouncedSearchTerm instead of searchTerm
+    queryKey: ['approvedArticles', debouncedSearchTerm], 
     queryFn: async () => {
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/articles-req`, {
-        params: { searchTerm: debouncedSearchTerm }, // Send debouncedSearchTerm as query parameter
+        params: { searchTerm: debouncedSearchTerm }, 
       });
       return data;
     },
   });
 
-  // Filter the articles to show only those with status 'Approved'
   const approvedArticles = articles.filter((article) => article.status === 'Approved');
 
-  // Filter articles based on selected publisher and tags
   const filteredArticles = approvedArticles.filter((article) => {
     const matchesPublisher = selectedPublisher ? article.publisher === selectedPublisher : true;
     const matchesTag = selectedTag ? article.tags?.includes(selectedTag) : true;
     return matchesPublisher && matchesTag;
   });
 
-  // Extract unique publishers and tags for filtering options
-  const publishers = [...new Set(approvedArticles.map((article) => article.publisher))];
   const tags = [...new Set(approvedArticles.flatMap((article) => article.tags || []))];
 
-  // Helper function to truncate description
   const truncateDescription = (description, wordLimit) => {
     const words = description.split(' ');
     return words.length > wordLimit
@@ -102,7 +107,7 @@ const ViewAllArticles = () => {
               placeholder="Search by title"
               className="input input-bordered w-full mb-4"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}  // Update searchTerm on change
+              onChange={(e) => setSearchTerm(e.target.value)} 
             />
 
             {/* Filter by publisher */}
@@ -115,8 +120,8 @@ const ViewAllArticles = () => {
               >
                 <option value="">All Publishers</option>
                 {publishers.map((publisher) => (
-                  <option key={publisher} value={publisher}>
-                    {publisher}
+                  <option key={publisher._id} value={publisher.name}>
+                    {publisher.name}
                   </option>
                 ))}
               </select>
