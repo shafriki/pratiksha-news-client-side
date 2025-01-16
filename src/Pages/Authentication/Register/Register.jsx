@@ -40,8 +40,16 @@ const Register = () => {
 
     // Password validation
     const uppercaseRegex = /[A-Z]/;
-    const lowercaseRegex = /[a-z]/;
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    const numericRegex = /[0-9]/;
     const lengthRequirement = password.length >= 6;
+
+    if (!lengthRequirement) {
+      toast.error("Password must be at least 6 characters long.", {
+        position: "top-center",
+      });
+      return;
+    }
 
     if (!uppercaseRegex.test(password)) {
       toast.error("Password must contain at least one uppercase letter.", {
@@ -50,15 +58,15 @@ const Register = () => {
       return;
     }
 
-    if (!lowercaseRegex.test(password)) {
-      toast.error("Password must contain at least one lowercase letter.", {
+    if (!specialCharRegex.test(password)) {
+      toast.error("Password must contain at least one special character.", {
         position: "top-center",
       });
       return;
     }
 
-    if (!lengthRequirement) {
-      toast.error("Password must be at least 6 characters long.", {
+    if (!numericRegex.test(password)) {
+      toast.error("Password must contain at least one numeric character.", {
         position: "top-center",
       });
       return;
