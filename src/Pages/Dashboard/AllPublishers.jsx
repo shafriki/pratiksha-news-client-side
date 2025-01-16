@@ -43,7 +43,8 @@ const AllPublishers = () => {
           title: "Success!",
           text: "Publisher added successfully.",
           icon: "success",
-          confirmButtonText: "OK",
+          showConfirmButton: false,
+          timer: 2000,
           position: "center", // This ensures the alert is centered
         });
       } else {
