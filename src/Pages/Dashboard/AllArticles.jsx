@@ -32,9 +32,7 @@ const AllArticles = () => {
     const handleApproveArticle = (article) => {
         const authToken = localStorage.getItem("authToken"); // Get the authToken
 
-        axiosSecure.patch(`/approve-article/${article._id}`, {
-            isApproved: true
-        }, {
+        axiosSecure.patch(`/articles-req/approve/${article._id}`, {}, {
             headers: {
                 Authorization: `Bearer ${authToken}`,  // Add the token in the headers
             },
@@ -66,9 +64,7 @@ const AllArticles = () => {
     const handleRejectArticle = (article) => {
         const authToken = localStorage.getItem("authToken"); // Get the authToken
 
-        axiosSecure.patch(`/approve-article/${article._id}`, {
-            isApproved: false
-        }, {
+        axiosSecure.patch(`/articles-req/reject/${article._id}`, {}, {
             headers: {
                 Authorization: `Bearer ${authToken}`,  // Add the token in the headers
             },
@@ -77,7 +73,7 @@ const AllArticles = () => {
             refetch();
             if (res.data.modifiedCount > 0) {
                 Swal.fire({
-                    position: 'top-end',
+                    position: 'center',
                     icon: 'success',
                     title: 'Article Rejected!',
                     showConfirmButton: false,
@@ -87,7 +83,7 @@ const AllArticles = () => {
         })
         .catch(err => {
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'error',
                 title: 'Failed to reject article!',
                 showConfirmButton: false,
@@ -143,7 +139,6 @@ const AllArticles = () => {
                             <th>Publisher</th>
                             <th>Status</th>
                             <th>Action</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -156,14 +151,12 @@ const AllArticles = () => {
                                         src={article.authorPhotoURL || 'default-image-url'} 
                                         alt="Author" 
                                         className="w-10 h-10 rounded-full" 
-                                    /> {/* Display author's image */}
+                                    />
                                 </td>
-                                <td>{article.title}</td> 
-
+                                <td>{article.title}</td>
                                 <td>{article.email}</td>
                                 <td>{article.postedDate}</td>
                                 <td>{article.publisher}</td>
-                                
                                 <td className={article.status === 'Approved' ? 'text-green-600' : article.status === 'Rejected' ? 'text-red-600' : 'text-yellow-600'}>
                                     {article.status}
                                 </td>
