@@ -65,6 +65,8 @@ Developing **Pratiksha News (প্রতীক্ষা নিউজ)** was my 
 8. **Real-time Notifications:** SweetAlert/Toast notifications for successful CRUD operations, authentication, and subscription activities.
 
 9. **Enhanced User Experience:** The homepage features custom modal prompts for subscriptions after a 10-second delay, and the user experience is enhanced with loader animations during API calls and smooth navigation transitions.
+9. **Responsive Design:**Try to Fully responsive for mobile, tablet, and desktop views, including the admin dashboard.
+
 
 
 

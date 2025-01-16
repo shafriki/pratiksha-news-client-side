@@ -6,13 +6,15 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdAddAPhoto, MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import AOS from "aos";
-import "aos/dist/aos.css"; 
+import "aos/dist/aos.css";
 import useAuth from "../../../Hooks/useAuth";
 import { imageUpload, saveUser } from "../../../api/utils";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
-  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth()
-  const navigate = useNavigate()
+  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
+  const navigate = useNavigate();
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 
@@ -21,11 +23,11 @@ const Register = () => {
   };
 
   useEffect(() => {
-    AOS.init(); 
+    AOS.init();
   }, []);
 
-   // form submit handler
-   const handleSubmit = async event => {
+  // form submit handler
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -35,64 +37,93 @@ const Register = () => {
 
     console.log({ name, email, password, image });
 
+    // Password validation
+    const uppercaseRegex = /[A-Z]/;
+    const lowercaseRegex = /[a-z]/;
+    const lengthRequirement = password.length >= 6;
+
+    if (!uppercaseRegex.test(password)) {
+      toast.error("Password must contain at least one uppercase letter.", {
+        position: "top-center",
+      });
+      return;
+    }
+
+    if (!lowercaseRegex.test(password)) {
+      toast.error("Password must contain at least one lowercase letter.", {
+        position: "top-center",
+      });
+      return;
+    }
+
+    if (!lengthRequirement) {
+      toast.error("Password must be at least 6 characters long.", {
+        position: "top-center",
+      });
+      return;
+    }
+
     // 1. Send image data to imgbb or use a default image
-    const photoURL = image ? await imageUpload(image) : 'https://example.com/default-avatar.jpg';
+    const photoURL = image ? await imageUpload(image) : "https://example.com/default-avatar.jpg";
 
     try {
-        // 2. User Registration
-        const result = await createUser(email, password);
+      // 2. User Registration
+      const result = await createUser(email, password);
 
-        // 3. Save username & profile photo
-        await updateUserProfile(name, photoURL);
-        console.log(result);
+      // 3. Save username & profile photo
+      await updateUserProfile(name, photoURL);
+      console.log(result);
 
-        // Save user info in DB if the user is new
-        await saveUser({ ...result?.user, displayName: name, photoURL });
-        navigate('/');
-        toast.success('Signup Successful');
+      // Save user info in DB if the user is new
+      await saveUser({ ...result?.user, displayName: name, photoURL });
+      navigate("/");
+      toast.success("Signup Successful", {
+        position: "top-center",
+      });
     } catch (err) {
-        console.log(err);
-        toast.error(err?.message);
+      console.log(err);
+      toast.error(err?.message, {
+        position: "top-center",
+      });
     }
-};
-
+  };
 
   // Handle Google Signin
   const handleGoogleSignIn = async () => {
     try {
-      //User Registration using google
-      const data = await signInWithGoogle()
-      await saveUser(data?.user)
-      navigate('/')
-      toast.success('Signup Successful')
+      // User Registration using Google
+      const data = await signInWithGoogle();
+      await saveUser(data?.user);
+      navigate("/");
+      toast.success("Signup Successful", {
+        position: "top-center",
+      });
     } catch (err) {
-      console.log(err)
-      toast.error(err?.message)
+      console.log(err);
+      toast.error(err?.message, {
+        position: "top-center",
+      });
     }
-  }
+  };
 
   return (
     <div
       className="relative bg-fixed min-h-screen bg-cover bg-center overflow-auto flex items-center justify-center"
       style={{
-        backgroundImage:
-          "url('https://i.ibb.co.com/wdM0rhy/newspapers-444453-1280.jpg')",
+        backgroundImage: "url('https://i.ibb.co.com/wdM0rhy/newspapers-444453-1280.jpg')",
       }}
     >
+      <ToastContainer />
       <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
 
       {/* Register form */}
       <div
         className="w-full max-w-xl mx-3 md:mx-0 mt-14 p-8 bg-white bg-opacity-20 backdrop-blur-sm rounded-md shadow-lg z-10"
-        data-aos="fade-up" 
-        data-aos-duration="1000" 
+        data-aos="fade-up"
+        data-aos-duration="1000"
       >
-        <h2 className="text-3xl font-bold text-center text-white mb-2">
-          Create an Account
-        </h2>
-        <p className="text-white text-center text-xs md:text-sm">
-          Join us in making a difference!
-        </p>
+        <h2 className="text-3xl font-bold text-center text-white mb-2">Create an Account</h2>
+        <p className="text-white text-center text-xs md:text-sm">Join us in making a difference!</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative flex items-center mt-4">
@@ -138,7 +169,6 @@ const Register = () => {
               required
               autoComplete="image"
             />
-
           </div>
 
           <div className="relative flex items-center mt-4">
@@ -170,7 +200,8 @@ const Register = () => {
           <div className="flex-grow border-t border-gray-400"></div>
         </div>
 
-        <button onClick={handleGoogleSignIn}
+        <button
+          onClick={handleGoogleSignIn}
           type="button"
           className="w-full px-4 py-2 font-semibold text-white bg-[#0f162f] hover:bg-[#070A16] ease-in-out btn border-none rounded-md"
         >
