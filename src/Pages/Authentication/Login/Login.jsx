@@ -9,7 +9,7 @@ import 'aos/dist/aos.css';
 import useAuth from '../../../Hooks/useAuth';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import { Navigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -37,26 +37,46 @@ const Login = () => {
     try {
       await signIn(email, password);
       navigate(from, { replace: true });
-      toast.success('Login Successful');
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'You have successfully logged in!',
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (err) {
       console.log(err);
-      toast.error(err?.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: err?.message || 'Something went wrong!',
+      });
     }
   };
 
   const handleGoogleSignIn = async () => {
     try {
       const data = await signInWithGoogle();
-      await saveUser(data?.user); 
+      await saveUser(data?.user);
       navigate(from, { replace: true });
-      toast.success('Login Successful');
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        text: 'You have successfully logged in with Google!',
+        showConfirmButton: false,
+        timer: 2000,
+      });
     } catch (err) {
       console.log(err);
-      toast.error(err?.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: err?.message || 'Something went wrong!',
+      });
     }
   };
 
-  if (loading) return <LoadingSpinner></LoadingSpinner>
+  if (loading) return <LoadingSpinner />;
   if (user) return <Navigate to={from} replace={true} />;
 
   return (
