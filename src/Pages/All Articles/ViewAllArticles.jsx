@@ -10,6 +10,7 @@ import img1 from '../../assets/1.png';
 import img2 from '../../assets/2.png';
 import img3 from '../../assets/3.png';
 import Latest from '../Home/Latest/Latest';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,7 +69,7 @@ const ViewAllArticles = () => {
   if (isLoading) {
     return (
       <div className="text-center my-10 md:my-20">
-        <span className="loading loading-bars loading-lg"></span>
+        <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }

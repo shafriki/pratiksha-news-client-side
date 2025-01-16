@@ -5,7 +5,7 @@ import { MdLabelImportant } from "react-icons/md";
 
 const Latest = () => {
     return (
-        <div className='flex  mb-5 items-center gap-2 bg-base-200 p-2 text-xs md:text-base bg-gradient-to-r from-[#070A16] via-[#070A16] to-[#070A16] opacity-90 text-white sticky top-[65px] md:top-[78px] z-50'>
+        <div className='flex  mb-5 items-center gap-2 bg-base-200 p-2 text-xs md:text-base bg-gradient-to-r from-[#070A16] via-[#070A16] to-[#070A16] opacity-90 text-white sticky top-[65px] md:top-[78px] z-40'>
             <p className='bg-[#2AB7B1] px-4 py-2 font-extrabold text-[#070A16] whitespace-nowrap'>শিরোনাম:</p>
 
             <Marquee autoFill='true' pauseOnHover='true'>
@@ -31,7 +31,7 @@ const Latest = () => {
 
                 <Link className='ml-10 flex items-center gap-1'>
                     <MdLabelImportant className='text-[#2AB7B1] text-xl'/>
-                    Cox’s Bazar Beach Run
+                    গণ-অভ্যুত্থানের ঘোষণাপত্র নিয়ে সর্বদলীয় বৈঠকে যাচ্ছে বিএনপি
                 </Link>
 
                 <Link className='ml-10 flex items-center gap-1'>

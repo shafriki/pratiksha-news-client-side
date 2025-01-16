@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 const AllArticles = () => {
     const axiosSecure = useAxiosSecure();
@@ -124,7 +125,7 @@ const AllArticles = () => {
     if (isLoading) {
         return (
             <div className="text-center my-10 md:my-20">
-                <span className="loading loading-bars loading-lg"></span>
+                <LoadingSpinner></LoadingSpinner>
             </div>
         );
     }
