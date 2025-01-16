@@ -11,6 +11,7 @@ import { IoNewspaperSharp } from "react-icons/io5";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FaPenAlt } from "react-icons/fa";
 import { HiMiniEye } from "react-icons/hi2";
+import { Link } from 'react-router-dom';
 
 const Trending = () => {
     const { data: trendingArticles = [], isLoading, error } = useQuery({
@@ -104,7 +105,8 @@ const Trending = () => {
                                         Views: {article.viewCount} </p>
                                         
                                         <div className="card-actions justify-end">
-                                            <button className="btn bg-[#02faee] hover:bg-[#01a69e] border-none text-gray-700 w-full">See More</button>
+                                            
+                                            <Link to={`/articles-details/${article._id}`} className="btn bg-[#02faee] hover:bg-[#01a69e] border-none text-gray-700 w-full">See More</Link>
                                         </div>
                                     </div>
                                 </div>

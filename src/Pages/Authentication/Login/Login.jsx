@@ -9,12 +9,13 @@ import 'aos/dist/aos.css';
 import useAuth from '../../../Hooks/useAuth';
 import LoadingSpinner from '../../../Components/LoadingSpinner';
 import { Navigate } from 'react-router-dom';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2'; 
+import { saveUser } from '../../../api/utils'; 
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { signIn, signInWithGoogle, loading, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,7 +58,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       const data = await signInWithGoogle();
-      await saveUser(data?.user);
+      await saveUser(data?.user); 
       navigate(from, { replace: true });
       Swal.fire({
         icon: 'success',
@@ -102,6 +103,7 @@ const Login = () => {
             <input
               type="email"
               name="email"
+              autoComplete='email'
               className="block w-full py-3 text-gray-700 bg-white border rounded-md px-11"
               placeholder="Enter Your Email"
               value={email}
@@ -118,10 +120,11 @@ const Login = () => {
               {passwordVisible ? <FaEye className="text-gray-700" /> : <FaEyeSlash className="text-gray-700" />}
             </span>
             <input
-              type={passwordVisible ? "text" : "password"}
+              type={passwordVisible ? 'text' : 'password'}
               name="password"
               className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-md"
               placeholder="Enter Your Password"
+              autoComplete='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -151,7 +154,7 @@ const Login = () => {
         </button>
 
         <p className="text-sm text-center text-white mt-4">
-          New Here?{" "}
+          New Here?{' '}
           <Link to="/register" className="font-medium text-white hover:underline">
             Create an Account
           </Link>
