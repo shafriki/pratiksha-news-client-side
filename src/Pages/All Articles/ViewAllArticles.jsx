@@ -5,6 +5,11 @@ import { Parallax } from 'react-parallax';
 import { FaPenAlt } from "react-icons/fa";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
+import { FaFacebook, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
+import img1 from '../../assets/1.png';
+import img2 from '../../assets/2.png';
+import img3 from '../../assets/3.png';
+import Latest from '../Home/Latest/Latest';
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -94,11 +99,13 @@ const ViewAllArticles = () => {
         </div>
       </Parallax>
 
+      <Latest></Latest>
+
       {/* all articles section */}
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-12 justify-between my-12 gap-5">
         {/* left side section */}
-        <aside className="col-span-3 mx-3 md:mx-0">
-          <div className="p-4 bg-white shadow-lg rounded-lg">
+        <aside className="col-span-3 mx-3 md:mt-10 md:mx-0">
+          <div className="p-4 bg-gray-200 shadow-lg rounded-lg">
             <h3 className="text-lg font-bold mb-4">Filter Articles</h3>
 
             {/* Search field */}
@@ -202,7 +209,24 @@ const ViewAllArticles = () => {
 
         {/* right side part */}
         <aside className="col-span-3 mx-3 md:mx-0">
-          <p>Additional content or widgets can go here.</p>
+        <div className='mt-8'>
+            <h1 className='font-semibold'>Find Us On</h1>
+            <div className='flex flex-col  gap-1'>
+                <button className="btn rounded-none border-[#02faee] justify-start"><FaFacebook className='text-blue-600'/>Facebook</button>
+                <button className="btn rounded-none border-[#02faee] justify-start"><FaTwitterSquare className='text-blue-600'/>Twiter</button>
+                <button className="btn rounded-none border-[#02faee] justify-start"><FaInstagramSquare className='text-rose-500 bg-amber-300' />Instagram</button>
+            </div>
+        </div>
+
+        <div className='mt-8 bg-[#f4f9f9] p-2'>
+            <h1 className='font-semibold'>Featured Ads</h1>
+            <div className='p-1 flex flex-col items-center gap-2'>
+                <img src={img1} alt="" />
+                <img src={img2} alt="" />
+                <img src={img3} alt="" />
+
+            </div>
+        </div>
         </aside>
       </div>
     </div>
