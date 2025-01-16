@@ -5,26 +5,38 @@ import { IoMdLogIn } from "react-icons/io";
 import { FaUserEdit } from "react-icons/fa";
 import avatarImg from '../../../assets/placeholder.jpg';
 import useAuth from '../../../Hooks/useAuth';
-import useRole from '../../../Hooks/useRole';  
+import useRole from '../../../Hooks/useRole';
+import Swal from 'sweetalert2';  
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    const [role, isLoading] = useRole();  
+    const [role, isLoading] = useRole();
 
     const Links = <>
-
         <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
         <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
         <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
         <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
         <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
         <NavLink to='/premium-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Premium Articles</NavLink>
-        
+
         {/* only for admin */}
         {role === 'admin' && (
             <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
         )}
     </>;
+
+    const handleLogout = () => {
+        logOut();
+        Swal.fire({
+            title: 'Success!',
+            text: 'You have logged out successfully.',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 2000,
+            position: 'center'
+        });
+    };
 
     return (
         <div className='bg-gradient-to-r from-[#070A16] via-[#070A16] to-[#070A16] text-white fixed z-50 w-full backdrop-blur opacity-80 md:py-1'>
@@ -62,18 +74,18 @@ const Navbar = () => {
                 <div className="navbar-end flex gap-1 items-center">
                     {user ? (
                         <>
-                        <div className="dropdown z-10 dropdown-hover dropdown-bottom dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#2AB7B1] object-cover cursor-pointer" title={user.displayName}>
-                                    <img alt={user.displayName} src={user.photoURL || avatarImg} />
+                            <div className="dropdown z-10 dropdown-hover dropdown-bottom dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#2AB7B1] object-cover cursor-pointer" title={user.displayName}>
+                                        <img alt={user.displayName} src={user.photoURL || avatarImg} />
+                                    </div>
                                 </div>
+                                <ul tabIndex={0} className="dropdown-content space-y-2 z-[1] menu shadow bg-base-100 rounded-box w-56">
+                                    <li><button className="btn bg-[#2AB7B1] text-white">{user.displayName}</button></li>
+                                    <li><button onClick={handleLogout} className="btn bg-[#2AB7B1] text-white"><IoMdLogIn /> Log Out</button></li>
+                                </ul>
                             </div>
-                            <ul tabIndex={0} className="dropdown-content space-y-2 z-[1] menu shadow bg-base-100 rounded-box w-56">
-                                <li><button className="btn bg-[#2AB7B1] text-white">{user.displayName}</button></li>
-                                <li><button onClick={logOut} className="btn bg-[#2AB7B1] text-white"><IoMdLogIn /> Log Out</button></li>
-                            </ul>
-                        </div>
-                        <button onClick={logOut} className="btn bg-teal-500 border-none px-4 hover:bg-[#2AB7B1] text-sm text-white hidden md:block">Log Out</button>
+                            <button onClick={handleLogout} className="btn bg-teal-500 border-none px-4 hover:bg-[#2AB7B1] text-sm text-white hidden md:block">Log Out</button>
                         </>
                     ) : (
                         <>
