@@ -8,6 +8,12 @@ const AllArticles = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    // Function to get the first 5 words
+    const getFirstFiveWords = (str) => {
+        const words = str.split(' ');
+        return words.slice(0, 5).join(' ') + (words.length > 5 ? '...' : '');
+    };
+
     // Fetch articles from API
     const { data: articles = [], isLoading, refetch } = useQuery({
         queryKey: ['articles'],
@@ -153,7 +159,7 @@ const AllArticles = () => {
                                         className="w-10 h-10 rounded-full" 
                                     />
                                 </td>
-                                <td>{article.title}</td>
+                                <td>{getFirstFiveWords(article.title)}</td> {/* Display first 5 words of title */}
                                 <td>{article.email}</td>
                                 <td>{article.postedDate}</td>
                                 <td>{article.publisher}</td>
