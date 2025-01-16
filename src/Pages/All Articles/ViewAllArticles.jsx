@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Parallax } from 'react-parallax';
@@ -7,16 +7,45 @@ import { IoNewspaperSharp } from "react-icons/io5";
 import { SlCalender } from "react-icons/sl";
 
 const ViewAllArticles = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [selectedPublisher, setSelectedPublisher] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
+
+  // Debounce the searchTerm
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500); // Debounce delay (in milliseconds)
+
+    // Cleanup the timeout if the component is unmounted or searchTerm changes
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  // Fetch articles with the debounced search term
   const { data: articles = [], isLoading, isError } = useQuery({
-    queryKey: ['approvedArticles'],
+    queryKey: ['approvedArticles', debouncedSearchTerm], // Use debouncedSearchTerm instead of searchTerm
     queryFn: async () => {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/articles-req`);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/articles-req`, {
+        params: { searchTerm: debouncedSearchTerm }, // Send debouncedSearchTerm as query parameter
+      });
       return data;
     },
   });
 
   // Filter the articles to show only those with status 'Approved'
   const approvedArticles = articles.filter((article) => article.status === 'Approved');
+
+  // Filter articles based on selected publisher and tags
+  const filteredArticles = approvedArticles.filter((article) => {
+    const matchesPublisher = selectedPublisher ? article.publisher === selectedPublisher : true;
+    const matchesTag = selectedTag ? article.tags?.includes(selectedTag) : true;
+    return matchesPublisher && matchesTag;
+  });
+
+  // Extract unique publishers and tags for filtering options
+  const publishers = [...new Set(approvedArticles.map((article) => article.publisher))];
+  const tags = [...new Set(approvedArticles.flatMap((article) => article.tags || []))];
 
   // Helper function to truncate description
   const truncateDescription = (description, wordLimit) => {
@@ -64,44 +93,101 @@ const ViewAllArticles = () => {
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-12 justify-between my-12 gap-5">
         {/* left side section */}
         <aside className="col-span-3 mx-3 md:mx-0">
-          <p>left side part</p>
+          <div className="p-4 bg-white shadow-lg rounded-lg">
+            <h3 className="text-lg font-bold mb-4">Filter Articles</h3>
+
+            {/* Search field */}
+            <input
+              type="text"
+              placeholder="Search by title"
+              className="input input-bordered w-full mb-4"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}  // Update searchTerm on change
+            />
+
+            {/* Filter by publisher */}
+            <div className="mb-4">
+              <label className="block mb-2 font-bold">Publisher</label>
+              <select
+                className="select select-bordered w-full"
+                value={selectedPublisher}
+                onChange={(e) => setSelectedPublisher(e.target.value)}
+              >
+                <option value="">All Publishers</option>
+                {publishers.map((publisher) => (
+                  <option key={publisher} value={publisher}>
+                    {publisher}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Filter by tag */}
+            <div>
+              <label className="block mb-2 font-bold">Tags</label>
+              <select
+                className="select select-bordered w-full"
+                value={selectedTag}
+                onChange={(e) => setSelectedTag(e.target.value)}
+              >
+                <option value="">All Tags</option>
+                {tags.map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </aside>
 
         {/* middle card section */}
         <section className="col-span-6 mx-3 md:mx-0">
           <div className="max-w-screen-xl mx-5 my-10 md:mx-auto">
             <div className="grid grid-cols-1 gap-6">
-              {approvedArticles.map((article) => (
-                <div key={article._id} className="bg-[#f4f9f9] cursor-pointer group rounded-lg shadow-lg overflow-hidden">
+              {filteredArticles.map((article) => (
+                <div
+                  key={article._id}
+                  className="bg-[#f4f9f9] cursor-pointer group rounded-lg shadow-lg overflow-hidden"
+                >
                   <img
                     src={article.photoURL}
                     alt={article.title}
-                    className="w-full  group-hover:scale-110 
-                transition h-64 object-cover"
+                    className="w-full group-hover:scale-110 transition h-64 object-cover"
                   />
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
                     {/* writer and publisher */}
-                    <div className='flex items-center justify-between mb-1'>
-                    <p className="text-sm text-gray-500 "><span className='font-bold'><IoNewspaperSharp className='inline-block mr-1' />
-                    Publisher:</span> {article.publisher}</p>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-sm text-gray-500">
+                        <span className="font-bold">
+                          <IoNewspaperSharp className="inline-block mr-1" />
+                          Publisher:
+                        </span>{' '}{article.publisher}
+                      </p>
 
-                    <p className="text-sm text-gray-500 "><span className='font-bold'><FaPenAlt className='inline-block mr-1'/>Writer:</span> {article.authorName}</p>
-
-                        
+                      <p className="text-sm text-gray-500">
+                        <span className="font-bold">
+                          <FaPenAlt className="inline-block mr-1" />
+                          Writer:
+                        </span>{' '}{article.authorName}
+                      </p>
                     </div>
 
-                    <p className="text-sm text-gray-500"><span className='font-bold'><SlCalender className='inline-block mr-1'/>
-                    Published on:</span> {article.postedDate}</p>
+                    <p className="text-sm text-gray-500">
+                      <span className="font-bold">
+                        <SlCalender className="inline-block mr-1" />
+                        Published on:
+                      </span>{' '}{article.postedDate}
+                    </p>
 
-                    <div class="divider"></div>
+                    <div className="divider"></div>
 
                     <p className="text-gray-500 mb-4">
                       {truncateDescription(article.description, 30)}
                     </p>
 
-                    <button className='btn w-full bg-[#02faee]'>See More</button>
-                    
+                    <button className="btn w-full bg-[#02faee]">See More</button>
                   </div>
                 </div>
               ))}
@@ -109,9 +195,9 @@ const ViewAllArticles = () => {
           </div>
         </section>
 
-        {/* right card section */}
+        {/* right side part */}
         <aside className="col-span-3 mx-3 md:mx-0">
-          <p>right side part</p>
+          <p>Additional content or widgets can go here.</p>
         </aside>
       </div>
     </div>
