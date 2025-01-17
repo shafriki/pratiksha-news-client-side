@@ -18,6 +18,7 @@ import AdminRoute from "./AdminRoute";
 import Profile from "../Pages/Profile";
 import ArticleDetails from "../Pages/ArticlesDetails/ArticleDetails";
 import ErrorPage from "../Pages/Error Page/ErrorPage";
+import Payment from "../Pages/Payment/Payment";
 
 export const router = createBrowserRouter([
 
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/payment',
+        element: <PrivateRoute><Payment></Payment></PrivateRoute>
       },
       {
         path: 'add-articles',
