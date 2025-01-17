@@ -52,11 +52,11 @@ const Publishers = () => {
 >
     {publishers.map((publisher) => (
         <SwiperSlide key={publisher._id} className="relative">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div className="bg-white cursor-pointer group rounded-lg shadow-lg overflow-hidden">
                 <img
                     src={publisher.photoURL}
                     alt={publisher.name}
-                    className="w-full h-64 object-cover"
+                    className="w-full group-hover:scale-110 h-64 object-cover"
                 />
                 <div className="p-4">
                     <h3 className="text-sm md:text-lg uppercase text-center absolute bottom-0 left-0 right-0 flex items-center justify-center text-semibold text-black bg-opacity-60 bg-[#2AB7B1] py-2">{publisher.name}</h3>

@@ -6,6 +6,7 @@ import TopNews from '../TopNews/TopNews';
 import Publishers from '../Publishers/Publishers';
 import Trending from '../../Trending Articles/Trending';
 import SubscriptionModal from '../../../Components/Subscription Modal/SubscriptionModal';
+import Plans from '../../Plans/Plans';
 
 const Home = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,6 +30,7 @@ const Home = () => {
             <TopNews />
             <Publishers />
             <Trending />
+            <Plans />
         </div>
     );
 };
