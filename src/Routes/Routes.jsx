@@ -17,6 +17,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import Profile from "../Pages/Profile";
 import ArticleDetails from "../Pages/ArticlesDetails/ArticleDetails";
+import ErrorPage from "../Pages/Error Page/ErrorPage";
 
 export const router = createBrowserRouter([
 
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
-    errorElement: <h1>error bro</h1>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: '/',
