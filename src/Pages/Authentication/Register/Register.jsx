@@ -12,6 +12,7 @@ import { imageUpload, saveUser } from "../../../api/utils";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BeatLoader } from 'react-spinners';
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
@@ -122,6 +123,10 @@ const Register = () => {
         backgroundImage: "url('https://i.ibb.co.com/wdM0rhy/newspapers-444453-1280.jpg')",
       }}
     >
+      <Helmet>
+        <title>Register | প্রতীক্ষা নিউজ</title>
+       </Helmet>
+
       <ToastContainer />
       <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
 

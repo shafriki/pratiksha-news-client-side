@@ -5,6 +5,7 @@ import { imageUpload } from "../../api/utils";
 import useAxiosSecure from "../../Hooks/useAxiousSecure";
 import Swal from "sweetalert2";  
 import { BeatLoader } from "react-spinners";
+import { Helmet } from "react-helmet-async";
 
 
 const AllPublishers = () => {
@@ -67,6 +68,10 @@ const AllPublishers = () => {
 
   return (
     <div className="max-w-screen-sm mx-auto">
+      <Helmet>
+        <title>Add Publisher | প্রতীক্ষা নিউজ</title>
+      </Helmet>
+      
       <h3 className="text-center text-xl md:text-3xl font-bold mb-10">Add Publisher</h3>
       <form onSubmit={handleSubmit} className="space-y-4 bg-[#66c0b8] rounded-md p-6">
         {/* Name Input */}

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import { Parallax } from 'react-parallax';
+import { Helmet } from 'react-helmet-async';
 
 const ArticleDetails = () => {
   const { id } = useParams();
@@ -43,6 +44,10 @@ const ArticleDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Details | প্রতীক্ষা নিউজ</title>
+      </Helmet>
+
       {/* parallax section */}
       <Parallax
         blur={{ min: -50, max: 50 }}

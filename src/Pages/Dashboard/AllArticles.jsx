@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
 import LoadingSpinner from '../../Components/LoadingSpinner';
+import { Helmet } from 'react-helmet-async';
 
 const AllArticles = () => {
     const axiosSecure = useAxiosSecure();
@@ -132,6 +133,10 @@ const AllArticles = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>All Articles | প্রতীক্ষা নিউজ</title>
+            </Helmet>
+
             <h2 className="text-xl md:text-3xl text-center font-bold mb-5">All Articles</h2>
             <div className="overflow-x-auto shadow-lg">
                 <table className="table">

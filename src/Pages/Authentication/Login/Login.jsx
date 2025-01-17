@@ -11,6 +11,7 @@ import LoadingSpinner from '../../../Components/LoadingSpinner';
 import { Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; 
 import { saveUser } from '../../../api/utils'; 
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -85,6 +86,10 @@ const Login = () => {
       className="relative bg-fixed min-h-screen bg-cover bg-center overflow-auto flex items-center justify-center"
       style={{ backgroundImage: "url('https://i.ibb.co.com/SfRz7q8/loginbg.jpg')" }}
     >
+      <Helmet>
+        <title>Login | প্রতীক্ষা নিউজ</title>
+      </Helmet>
+
       <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
 
       <div

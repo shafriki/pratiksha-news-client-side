@@ -13,6 +13,7 @@ import Latest from '../Home/Latest/Latest';
 import LoadingSpinner from '../../Components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import SubscriptionModal from '../../Components/Subscription Modal/SubscriptionModal'; 
+import { Helmet } from 'react-helmet-async';
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -96,6 +97,11 @@ const ViewAllArticles = () => {
 
   return (
     <div>
+      
+      <Helmet>
+        <title>All Articles | প্রতীক্ষা নিউজ</title>
+      </Helmet>
+
       {/* Parallax Section */}
       <Parallax
         blur={{ min: -50, max: 50 }}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
+import { Helmet } from 'react-helmet-async';
 
 const AllUsers = () => {
     const axiosSecure = useAxiosSecure();
@@ -85,6 +86,10 @@ const handleMakeAdmin = (user) => {
 
     return (
         <div>
+            <Helmet>
+                <title>All User | প্রতীক্ষা নিউজ</title>
+            </Helmet>
+
             <h2 className="text-xl md:text-3xl text-center font-bold mb-5">Manage All Users</h2>
             <div className="overflow-x-auto shadow-md">
                 <table className="table">

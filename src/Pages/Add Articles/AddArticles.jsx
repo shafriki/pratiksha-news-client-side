@@ -6,6 +6,7 @@ import useAxiosSecure from '../../Hooks/useAxiousSecure';
 import Swal from 'sweetalert2';
 import { BeatLoader } from 'react-spinners';
 import { AuthContext } from '../../proviers/AuthProvider';
+import { Helmet } from 'react-helmet-async';
 
 const AddArticles = () => {
   const { user } = useContext(AuthContext);
@@ -131,6 +132,10 @@ const AddArticles = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Articles | প্রতীক্ষা নিউজ</title>
+      </Helmet>
+
       <Parallax
         blur={{ min: -50, max: 50 }}
         bgImage="https://i.ibb.co.com/SfRz7q8/loginbg.jpg"
