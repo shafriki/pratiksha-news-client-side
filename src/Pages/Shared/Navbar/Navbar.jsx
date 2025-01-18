@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';  
 import { Link, NavLink } from 'react-router-dom';
 import news from '../../../assets/logo (1).png';
 import { IoMdLogIn } from "react-icons/io";
@@ -7,35 +7,53 @@ import avatarImg from '../../../assets/placeholder.jpg';
 import useAuth from '../../../Hooks/useAuth';
 import useRole from '../../../Hooks/useRole';
 import Swal from 'sweetalert2';  
+import axios from 'axios'; 
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     const [role, isLoading] = useRole();
+    const [userData, setUserData] = useState(null); 
+
+    useEffect(() => {
+        if (user) {
+            const fetchUserData = async () => {
+                try {
+                    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
+                        params: { search: user.email } 
+                    });
+                    setUserData(data[0]); 
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            };
+            fetchUserData();
+        }
+    }, [user]);
 
     const Links = <>
-        <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
-        
-        <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
-       
-        {/* after login user navlik */}
-        {user && (
-                <>
-                   <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
+    <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
+    
+    <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
+   
+    {/* after login user navlik */}
+    {user && (
+            <>
+               <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
 
-                   <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
+               <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
 
-                   <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
-                   
-                    <NavLink to='/premium-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Premium Articles</NavLink>
+               <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
+               
+                <NavLink to='/premium-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Premium Articles</NavLink>
 
-                </>
-            )}
-
-        {/* only for admin */}
-        {role === 'admin' && (
-            <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
+            </>
         )}
-    </>;
+
+    {/* only for admin */}
+    {role === 'admin' && (
+        <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
+    )}
+</>;
 
     const handleLogout = () => {
         logOut();
@@ -55,18 +73,6 @@ const Navbar = () => {
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden ">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M4 6h16M4 12h8m-8 6h16" />
-                            </svg>
                         </div>
                         <ul
                             tabIndex={0}
@@ -88,11 +94,12 @@ const Navbar = () => {
                             <div className="dropdown  z-10 dropdown-hover dropdown-bottom dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#2AB7B1] object-cover cursor-pointer" title={user.displayName}>
-                                        <img alt={user.displayName} src={user.photoURL || avatarImg} />
+                                        
+                                        <img alt={user.displayName} src={userData?.image || user.photoURL || avatarImg} />
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="dropdown-content space-y-2 z-[1] menu shadow bg-base-100 rounded-box w-56">
-                                    <li><button className="btn bg-[#2AB7B1] text-white">{user.displayName}</button></li>
+                                    <li><button className="btn bg-[#2AB7B1] text-white">{userData ? userData.name : user.displayName}</button></li> 
                                     <li><Link to='/profile' className="btn bg-[#2AB7B1] text-white">Profile</Link></li>
                                     <li><button onClick={handleLogout} className="btn bg-[#2AB7B1] text-white"><IoMdLogIn /> Log Out</button></li>
                                 </ul>
