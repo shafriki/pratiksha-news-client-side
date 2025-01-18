@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
-import img from '../../assets/premium.png'
+import img from '../../assets/premium.png';
 import { AuthContext } from '../../proviers/AuthProvider';
 
 const Subscription = () => {
-
-    const { user } = useContext(AuthContext);  // Access user from context
+    const { user } = useContext(AuthContext);
     const [subscriptionPeriod, setSubscriptionPeriod] = useState('');
     const [subscriptionCost, setSubscriptionCost] = useState('');
     const navigate = useNavigate();
@@ -15,17 +14,24 @@ const Subscription = () => {
         const period = event.target.value;
         setSubscriptionPeriod(period);
 
-        // Calculate cost based on selected period
+        // Calculate cost and convert period to time (in minutes)
         let cost = '';
+        let periodInMinutes = 0;
+
         if (period === '1min') {
-            cost = 10; // Assuming $0.5 for 1 minute
+            cost = 10;
+            periodInMinutes = 1; // 1 minute
         } else if (period === '1') {
-            cost = 100; // $1 for 1 day
+            cost = 100;
+            periodInMinutes = 1440; // 1 day = 1440 minutes
         } else if (period === '5') {
-            cost = 500; // $5 for 5 days
+            cost = 500;
+            periodInMinutes = 7200; // 5 days = 7200 minutes
         } else if (period === '10') {
-            cost = 1000; // $10 for 10 days
+            cost = 1000;
+            periodInMinutes = 14400; // 10 days = 14400 minutes
         }
+
         setSubscriptionCost(cost);
     };
 
@@ -34,6 +40,10 @@ const Subscription = () => {
             alert('Please select a subscription period.');
             return;
         }
+
+        // Save period in minutes to the database
+        // For example, save `periodInMinutes` and `subscriptionCost` in your backend
+        // You can use an API request to save the data in your DB
 
         // Navigate to the payment page with subscription details
         navigate('/payment', { state: { subscriptionPeriod, subscriptionCost } });
@@ -44,24 +54,19 @@ const Subscription = () => {
             <Helmet>
                 <title>Subscriptions | প্রতীক্ষা নিউজ</title>
             </Helmet>
-
             <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl">
                 <div className="flex flex-col md:flex-row">
-                    {/* Left Side: Image */}
                     <div className="md:w-1/2">
                         <img
-                            src={img} 
+                            src={img}
                             alt="Subscription Illustration"
                             className="h-full w-full object-cover"
                         />
                     </div>
-
-                    {/* Right Side: Form */}
                     <div className="md:w-1/2 p-8">
                         <h2 className="text-3xl font-bold mb-6 text-gray-800">
                             Choose Your Subscription Plan
                         </h2>
-
                         <div className="mb-4">
                             <label
                                 htmlFor="period"
@@ -82,7 +87,6 @@ const Subscription = () => {
                                 <option value="10">10 Days</option>
                             </select>
                         </div>
-
                         <div className="mb-4">
                             <label
                                 htmlFor="cost"
@@ -98,8 +102,6 @@ const Subscription = () => {
                                 className="border border-gray-300 rounded p-3 w-full bg-gray-100 text-gray-600 cursor-not-allowed"
                             />
                         </div>
-
-                        {/* Email Input Field */}
                         <div className="mb-4">
                             <label
                                 htmlFor="email"
@@ -110,19 +112,17 @@ const Subscription = () => {
                             <input
                                 id="email"
                                 type="email"
-                                value={user?.email || ''}  // Fetch email from user context
+                                value={user?.email || ''}
                                 readOnly
                                 className="border border-gray-300 rounded p-3 w-full bg-gray-100 text-gray-600 cursor-not-allowed"
                             />
                         </div>
-
                         <button
                             onClick={handleSubscribe}
                             className="bg-blue-500 btn text-white px-6 py-3 rounded hover:bg-blue-600 w-full"
                         >
                             Subscribe
                         </button>
-
                     </div>
                 </div>
             </div>
