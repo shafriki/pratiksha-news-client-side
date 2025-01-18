@@ -14,11 +14,17 @@ const MyArticles = () => {
     const { user } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const [selectedId, setSelectedId] = useState(null);
+    const [isReasonModalOpen, setIsReasonModalOpen] = useState(false); // State for reason modal
+    const [rejectionReason, setRejectionReason] = useState(''); // State for storing rejection reason
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     const closeModal = () => {
         setIsOpen(false);
+    };
+
+    const closeReasonModal = () => {
+        setIsReasonModalOpen(false);
     };
 
     // Fetch articles
@@ -88,6 +94,11 @@ const MyArticles = () => {
         setCurrentPage(pageNumber);
     };
 
+    const handleViewReason = (reason) => {
+        setRejectionReason(reason);
+        setIsReasonModalOpen(true);
+    };
+
     if (isLoading) {
         return (
             <div className="text-center my-10 md:my-20">
@@ -113,6 +124,7 @@ const MyArticles = () => {
                             <th>Status</th>
                             <th>Posted Date</th>
                             <th>Actions</th>
+                            <th>Reason</th> {/* New column for Reason */}
                         </tr>
                     </thead>
                     <tbody>
@@ -153,6 +165,16 @@ const MyArticles = () => {
                                         <MdDelete className='hidden md:block'/> Delete
                                     </button>
                                 </td>
+                                <td>
+                                    {article.status === 'Rejected' && (
+                                        <button
+                                            onClick={() => handleViewReason(article.rejectReason)}
+                                            className="btn btn-xs bg-transparent text-orange-600"
+                                        >
+                                            View Reason
+                                        </button>
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -160,6 +182,22 @@ const MyArticles = () => {
             </div>
 
             <DeleteModal handleDelete={handleDelete} id={selectedId} isOpen={isOpen} closeModal={closeModal} />
+
+            {/* Rejection Reason Modal */}
+            {isReasonModalOpen && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded shadow-lg">
+                        <h3 className="text-lg font-bold mb-4">Rejection Reason</h3>
+                        <p className="text-gray-700">{rejectionReason}</p>
+                        <button
+                            onClick={closeReasonModal}
+                            className="mt-4 px-4 py-2 bg-teal-500 text-white rounded"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <div className="flex justify-between items-center mt-8 space-y-2">
                 <div className="text-left">
