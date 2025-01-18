@@ -78,7 +78,7 @@ const UpdateArticle = () => {
   return (
     <div>
       <Helmet>
-        <title>Pratiksha News - Update Article</title>
+        <title>Update | প্রতীক্ষা নিউজ</title>
       </Helmet>
 
       <Parallax

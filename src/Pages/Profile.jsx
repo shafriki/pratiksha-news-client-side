@@ -8,6 +8,7 @@ import { imageUpload } from '../api/utils';
 import Swal from 'sweetalert2';  // Import SweetAlert2
 import { BeatLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -89,6 +90,9 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+                    <title>Profile | প্রতীক্ষা নিউজ</title>
+                  </Helmet>
       {/* Detail info banner */}
       <Parallax
         blur={{ min: -50, max: 50 }}
