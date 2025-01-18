@@ -6,6 +6,7 @@ import { FcSettings } from 'react-icons/fc';
 import { Link, useLocation } from 'react-router-dom'; // Import useLocation
 import { RiDashboardHorizontalFill } from 'react-icons/ri';
 import logo from '../../assets/news.png';
+import { FaHome } from "react-icons/fa";
 
 const Sidebar = () => {
   const [isActive, setActive] = useState(false);
@@ -79,10 +80,15 @@ const Sidebar = () => {
               <FaUserTie className='w-5 h-5' />
               <span className='mx-4 font-medium'>Add Publishers</span>
             </Link>
+            
           </div>
+          
         </div>
-
-        
+        <div>
+        <div className="divider"></div>
+        <Link to='/' className='mx-4 font-medium hover:text-green-500'><FaHome className='w-5 h-5 inline-block mr-1'/>
+        Back To Home</Link>
+        </div>
       </div>
     </>
   );
