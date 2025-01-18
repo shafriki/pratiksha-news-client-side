@@ -9,6 +9,9 @@ const AllArticles = () => {
     const axiosSecure = useAxiosSecure();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
+    const [selectedArticle, setSelectedArticle] = useState(null);
+    const [rejectReason, setRejectReason] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const getFirstFiveWords = (str) => {
         const words = str.split(' ');
@@ -62,10 +65,21 @@ const AllArticles = () => {
             });
     };
 
-    const handleRejectArticle = (article) => {
+    const handleRejectArticle = () => {
+        if (!rejectReason.trim()) {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: 'Please provide a reason for rejection!',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
+
         const authToken = localStorage.getItem('authToken');
         axiosSecure
-            .patch(`/articles-req/reject/${article._id}`, {}, {
+            .patch(`/articles-req/reject/${selectedArticle._id}`, { reason: rejectReason }, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -81,6 +95,9 @@ const AllArticles = () => {
                         timer: 1500,
                     });
                 }
+                setIsModalOpen(false);
+                setRejectReason('');
+                setSelectedArticle(null);
             })
             .catch(err => {
                 Swal.fire({
@@ -196,7 +213,10 @@ const AllArticles = () => {
                                                 Approve
                                             </button>
                                             <button
-                                                onClick={() => handleRejectArticle(article)}
+                                                onClick={() => {
+                                                    setSelectedArticle(article);
+                                                    setIsModalOpen(true);
+                                                }}
                                                 className="btn btn-xs bg-transparent text-red-600"
                                             >
                                                 Reject
@@ -255,6 +275,38 @@ const AllArticles = () => {
                     </button>
                 </div>
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white rounded-lg p-6 w-96">
+                        <h3 className="text-lg font-bold mb-4">Reject Article</h3>
+                        <textarea
+                            className="w-full border border-gray-300 rounded p-2"
+                            placeholder="Write the reason for rejection..."
+                            value={rejectReason}
+                            onChange={(e) => setRejectReason(e.target.value)}
+                        />
+                        <div className="mt-4 flex justify-end space-x-2">
+                            <button
+                                className="btn btn-sm bg-gray-300 text-gray-800 rounded"
+                                onClick={() => {
+                                    setIsModalOpen(false);
+                                    setRejectReason('');
+                                    setSelectedArticle(null);
+                                }}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="btn btn-sm bg-red-600 text-white rounded"
+                                onClick={handleRejectArticle}
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
