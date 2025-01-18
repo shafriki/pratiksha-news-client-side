@@ -16,8 +16,8 @@ const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedName, setUpdatedName] = useState('');
   const [updatedImage, setUpdatedImage] = useState('');
+  const [loading, setLoading] = useState(false);  // Add loading state
 
-  // Destructure `refetch` from useQuery
   const { data: fetchedUser = {}, isLoading, refetch } = useQuery({
     queryKey: ['user', user?.email, localStorage.getItem("authToken")],
     queryFn: async () => {
@@ -39,6 +39,8 @@ const Profile = () => {
   }
 
   const handleUpdateProfile = async () => {
+    setLoading(true);  // Set loading to true before starting the update
+
     const updatedData = {
       name: updatedName || fetchedUser?.name,
       image: updatedImage ? await imageUpload(updatedImage) : fetchedUser?.image,  // Use imageUpload hook here
@@ -80,6 +82,8 @@ const Profile = () => {
         confirmButtonText: 'Okay',
         confirmButtonColor: '#FF6F61',
       });
+    } finally {
+      setLoading(false);  // Set loading to false after the update process
     }
   };
 
@@ -102,7 +106,7 @@ const Profile = () => {
         <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4">
           <img
             alt={fetchedUser?.name || user.name}
-            src={fetchedUser?.image || "https://via.placeholder.com/150"} // Use the updated image URL from `fetchedUser`
+            src={fetchedUser?.image || "https://via.placeholder.com/150"} // Use the updated image URL from fetchedUser
             className="w-full h-full rounded-full border-4 border-blue-500 object-cover"
           />
           <div className="absolute bottom-0 right-0 bg-green-500 rounded-full w-6 h-6 border-2 border-white"></div>
@@ -193,7 +197,7 @@ const Profile = () => {
                       onClick={handleUpdateProfile}
                       className="bg-[#1e9004] hover:bg-[#177003] btn border-none md:px-8 text-white px-4 py-2 rounded"
                     >
-                      {isLoading ? <BeatLoader size={10} color="#ffffff" /> : 'Save'}
+                      {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Save'}
                     </button>
                   </div>
                 </Dialog.Panel>
