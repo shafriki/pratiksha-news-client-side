@@ -93,6 +93,7 @@ const Navbar = () => {
                                 </div>
                                 <ul tabIndex={0} className="dropdown-content space-y-2 z-[1] menu shadow bg-base-100 rounded-box w-56">
                                     <li><button className="btn bg-[#2AB7B1] text-white">{user.displayName}</button></li>
+                                    <li><Link to='/profile' className="btn bg-[#2AB7B1] text-white">Profile</Link></li>
                                     <li><button onClick={handleLogout} className="btn bg-[#2AB7B1] text-white"><IoMdLogIn /> Log Out</button></li>
                                 </ul>
                             </div>
