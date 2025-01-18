@@ -128,18 +128,18 @@ const MyArticles = () => {
                                         </div>
                                     </div>
                                 </td>
-                                <td>{article.title}</td>
+                                <td>{article.title.split(' ').slice(0, 4).join(' ')}{article.title.split(' ').length > 4 ? '...' : ''}</td>
                                 <td>{article.status}</td>
                                 <td>{article.postedDate}</td>
                                 <td>
-                                    <Link to={`/dashboard/article-details/${article._id}`}>
+                                    <Link to={`details/${article._id}`}>
                                         <button className="btn btn-xs bg-transparent text-blue-600">
-                                            <CiCircleMore /> View
+                                            <CiCircleMore className='hidden md:block'/> View
                                         </button>
                                     </Link>
                                     <Link to={`/dashboard/my-articles/${article._id}`}>
                                         <button className="btn btn-xs bg-transparent text-green-600">
-                                            <MdOutlineEdit /> Edit
+                                            <MdOutlineEdit className='hidden md:block'/> Edit
                                         </button>
                                     </Link>
                                     <button
@@ -149,7 +149,7 @@ const MyArticles = () => {
                                         }}
                                         className="btn btn-xs bg-transparent text-red-600"
                                     >
-                                        <MdDelete /> Delete
+                                        <MdDelete className='hidden md:block'/> Delete
                                     </button>
                                 </td>
                             </tr>
@@ -162,13 +162,13 @@ const MyArticles = () => {
 
             <div className="flex justify-between items-center mt-8 space-y-2">
                 <div className="text-left">
-                    <p className="text-purple-600 font-semibold">
+                    <p className="text-teal-600 font-semibold">
                         Showing {indexOfFirstArticle + 1} to {indexOfLastArticle > articles.length ? articles.length : indexOfLastArticle} of {articles.length} results
                     </p>
                 </div>
                 <div className="flex justify-center items-center space-x-2">
                     <button
-                        className={`px-3 py-1 border rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-purple-500'}`}
+                        className={`px-3 py-1 border rounded ${currentPage === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-white text-teal-500'}`}
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
                     >
@@ -177,7 +177,7 @@ const MyArticles = () => {
                     {Array.from({ length: totalPages }, (_, index) => (
                         <button
                             key={index}
-                            className={`px-3 py-1 border rounded ${currentPage === index + 1 ? 'bg-purple-500 text-white' : 'bg-white text-purple-500'}`}
+                            className={`px-3 py-1 border rounded ${currentPage === index + 1 ? 'bg-teal-500 text-white' : 'bg-white text-teal-500'}`}
                             onClick={() => handlePageClick(index + 1)}
                         >
                             {index + 1}

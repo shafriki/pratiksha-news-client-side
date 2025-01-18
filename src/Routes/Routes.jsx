@@ -19,6 +19,7 @@ import Profile from "../Pages/Profile";
 import ArticleDetails from "../Pages/ArticlesDetails/ArticleDetails";
 import ErrorPage from "../Pages/Error Page/ErrorPage";
 import Payment from "../Pages/Payment/Payment";
+import Details from "../Pages/My Articles/Details";
 
 export const router = createBrowserRouter([
 
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path: 'my-articles',
         element: <PrivateRoute><MyArticles></MyArticles></PrivateRoute>,
+      },
+      {
+        path: 'my-articles/details/:id',
+        element: <PrivateRoute><Details></Details></PrivateRoute>
       },
       {
         path: 'all-articles',
