@@ -141,7 +141,8 @@ const MyArticles = () => {
                                     </div>
                                 </td>
                                 <td>{article.title.split(' ').slice(0, 4).join(' ')}{article.title.split(' ').length > 4 ? '...' : ''}</td>
-                                <td>{article.status}</td>
+                                <td>{article.status ? article.status : 'Pending'}</td>
+
                                 <td>{article.postedDate}</td>
                                 <td>
                                     <Link to={`details/${article._id}`}>
