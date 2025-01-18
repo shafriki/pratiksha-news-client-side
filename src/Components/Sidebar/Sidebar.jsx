@@ -86,7 +86,7 @@ const Sidebar = () => {
         </div>
         <div>
         <div className="divider"></div>
-        <Link to='/' className='mx-4 font-medium hover:text-green-500'><FaHome className='w-5 h-5 inline-block mr-1'/>
+        <Link to='/' className='mx-4 font-medium hover:text-[#4bb1a8]'><FaHome className='w-5 h-5 inline-block mr-1'/>
         Back To Home</Link>
         </div>
       </div>
