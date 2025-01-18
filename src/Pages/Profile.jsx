@@ -4,6 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from '../Hooks/useAuth';
 import useAxiosSecure from '../Hooks/useAxiousSecure';
 import { Dialog, Transition } from '@headlessui/react';
+import { imageUpload } from '../api/utils';  
+import Swal from 'sweetalert2';  // Import SweetAlert2
+import { BeatLoader } from 'react-spinners';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -37,7 +41,7 @@ const Profile = () => {
   const handleUpdateProfile = async () => {
     const updatedData = {
       name: updatedName || fetchedUser?.name,
-      image: updatedImage || fetchedUser?.image,  // Properly set the image URL
+      image: updatedImage ? await imageUpload(updatedImage) : fetchedUser?.image,  // Use imageUpload hook here
     };
 
     try {
@@ -48,16 +52,34 @@ const Profile = () => {
       });
 
       if (response.data.success) {
-        alert('Profile updated successfully');
+        Swal.fire({
+          icon: 'success',
+          title: 'Profile Updated!',
+          text: 'Your profile has been successfully updated.',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: '#4CAF50',
+        });
         setIsModalOpen(false);
 
         // Refetch the user data after the profile is updated
         refetch();
       } else {
-        alert('Failed to update profile');
+        Swal.fire({
+          icon: 'error',
+          title: 'Update Failed!',
+          text: 'There was an error updating your profile. Please try again.',
+          confirmButtonText: 'Try Again',
+          confirmButtonColor: '#FF6F61',
+        });
       }
     } catch (error) {
-      alert('Error updating profile');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Something went wrong. Please try again later.',
+        confirmButtonText: 'Okay',
+        confirmButtonColor: '#FF6F61',
+      });
     }
   };
 
@@ -99,12 +121,11 @@ const Profile = () => {
           >
             Update Profile
           </button>
-          <button
+          <Link to='/'
             className="btn md:px-10 bg-green-500 hover:bg-green-600 border-none text-white"
-            onClick={logout}
           >
-            Log Out
-          </button>
+            Back To Home
+          </Link>
         </div>
       </div>
 
@@ -151,13 +172,12 @@ const Profile = () => {
                       />
                     </div>
                     <div className="mb-4">
-                      <label className="block mb-2">Image URL</label>
+                      <label className="block mb-2">Image</label>
                       <input
-                        type="text"
-                        placeholder="Enter new image URL"
-                        value={updatedImage}
-                        onChange={(e) => setUpdatedImage(e.target.value)}
-                        className="w-full p-2 border text-white border-[#FF6F61] bg-[#02332f] opacity-60 rounded"
+                        type="file"
+                        name="image"
+                        className="w-full border border-gray-300 p-2 rounded"
+                        onChange={(e) => setUpdatedImage(e.target.files[0])}  // Handle file input change
                       />
                     </div>
                   </div>
@@ -171,9 +191,9 @@ const Profile = () => {
                     </button>
                     <button
                       onClick={handleUpdateProfile}
-                      className="bg-[#1e9004] btn border-none md:px-8 text-white px-4 py-2 rounded"
+                      className="bg-[#1e9004] hover:bg-[#177003] btn border-none md:px-8 text-white px-4 py-2 rounded"
                     >
-                      Save
+                      {isLoading ? <BeatLoader size={10} color="#ffffff" /> : 'Save'}
                     </button>
                   </div>
                 </Dialog.Panel>
