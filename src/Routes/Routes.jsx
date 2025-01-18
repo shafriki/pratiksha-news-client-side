@@ -20,6 +20,7 @@ import ArticleDetails from "../Pages/ArticlesDetails/ArticleDetails";
 import ErrorPage from "../Pages/Error Page/ErrorPage";
 import Payment from "../Pages/Payment/Payment";
 import Details from "../Pages/My Articles/Details";
+import UpdateArticle from "../Pages/My Articles/UpdateArticle";
 
 export const router = createBrowserRouter([
 
@@ -65,6 +66,11 @@ export const router = createBrowserRouter([
         path: 'my-articles/details/:id',
         element: <PrivateRoute><Details></Details></PrivateRoute>
       },
+      {
+        path: 'my-articles/update/:id',
+        element: <PrivateRoute><UpdateArticle></UpdateArticle></PrivateRoute>
+    },
+    
       {
         path: 'all-articles',
         element: <ViewAllArticles></ViewAllArticles>,

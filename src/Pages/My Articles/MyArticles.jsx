@@ -48,7 +48,7 @@ const MyArticles = () => {
         },
         onSuccess: () => {
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'success',
                 title: 'Article Deleted!',
                 showConfirmButton: false,
@@ -137,11 +137,12 @@ const MyArticles = () => {
                                             <CiCircleMore className='hidden md:block'/> View
                                         </button>
                                     </Link>
-                                    <Link to={`/dashboard/my-articles/${article._id}`}>
-                                        <button className="btn btn-xs bg-transparent text-green-600">
-                                            <MdOutlineEdit className='hidden md:block'/> Edit
-                                        </button>
-                                    </Link>
+                                    <Link to={`/my-articles/update/${article._id}`}>
+    <button className="btn btn-xs bg-transparent text-green-600">
+        <MdOutlineEdit className='hidden md:block'/> Edit
+    </button>
+</Link>
+
                                     <button
                                         onClick={() => {
                                             setIsOpen(true);
