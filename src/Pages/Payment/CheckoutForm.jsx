@@ -3,10 +3,11 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
 import useAuth from '../../Hooks/useAuth';
+import { BeatLoader } from 'react-spinners';
 
 const CheckoutForm = () => {
     const stripe = useStripe();
-    const {user} = useAuth();
+    const { user } = useAuth();
     const elements = useElements();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
@@ -18,11 +19,10 @@ const CheckoutForm = () => {
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState('');
 
-    const authToken = localStorage.getItem('authToken'); // Retrieve authToken from localStorage
+    const authToken = localStorage.getItem('authToken'); 
 
     useEffect(() => {
         if (subscriptionCost) {
-            // Create payment intent when subscriptionCost is available
             axiosSecure
                 .post(
                     '/create-payment-intent',
@@ -103,33 +103,38 @@ const CheckoutForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <CardElement
-                options={{
-                    style: {
-                        base: {
-                            fontSize: '16px',
-                            color: '#424770',
-                            '::placeholder': {
-                                color: '#aab7c4',
+        <div className="max-w-2xl my-10 p-10 mx-auto border rounded-md bg-teal-100">
+            <form onSubmit={handleSubmit} className="space-y-4">
+                <CardElement
+                    className="border p-3 bg-white"
+                    options={{
+                        style: {
+                            base: {
+                                fontSize: '16px',
+                                color: '#424770',
+                                '::placeholder': {
+                                    color: '#aab7c4',
+                                },
+                            },
+                            invalid: {
+                                color: '#9e2146',
                             },
                         },
-                        invalid: {
-                            color: '#9e2146',
-                        },
-                    },
-                }}
-            />
-            <button
-                className="btn btn-primary"
-                type="submit"
-                disabled={!stripe || processing || !clientSecret}
-            >
-                {processing ? 'Processing...' : 'Pay'}
-            </button>
-            {error && <p className="text-red-600">{error}</p>}
-            {success && <p className="text-green-600">{success}</p>}
-        </form>
+                    }}
+                />
+                <p className="text-red-600">{error}</p>
+                {success && <p className="text-green-600">{success}</p>}
+                <div className="flex items-center justify-center pt-10">
+                    <button
+                        className="btn md:px-10 bg-teal-600 hover:bg-teal-700 text-white"
+                        type="submit"
+                        disabled={!stripe || processing || !clientSecret}
+                    >
+                        {processing ? <BeatLoader size={10} color="#ffffff" /> : 'Pay Now'}
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 
