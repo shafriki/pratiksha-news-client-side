@@ -4,6 +4,7 @@ import { AuthContext } from '../../proviers/AuthProvider';
 import { Helmet } from 'react-helmet-async';
 import img from '../../assets/premium.png';
 import useRole from '../../hooks/useRole';
+import { Parallax } from 'react-parallax';
 
 const Subscription = () => {
   const { user, updateUserRole } = useContext(AuthContext);
@@ -74,11 +75,27 @@ const Subscription = () => {
   const isAdmin = role === 'admin';
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div>
+        <Parallax
+        blur={{ min: -50, max: 50 }}
+        bgImage="https://i.ibb.co.com/SfRz7q8/loginbg.jpg"
+        bgImageAlt="the dog"
+        strength={-200}
+      >
+        <div className="hero-overlay h-[190px] md:h-[300px] bg-opacity-60 bg-cover bg-center bg-no-repeat text-[#02faee]">
+          <div className="relative max-w-7xl mx-auto py-8 px-3 md:py-16 md:px-6 text-left">
+            <h1 className="font-bold text-lg md:text-4xl mt-20 md:mt-16 text-center">
+              Choose Your Subscription Plan Here
+            </h1>
+          </div>
+        </div>
+      </Parallax>
+        <div className=" my-10 flex items-center justify-center ">
       <Helmet>
         <title>Subscriptions | প্রতীক্ষা নিউজ</title>
       </Helmet>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl">
+      
+      <div className="bg-teal-50 mx-3 md:mx-0 shadow-lg  rounded-lg overflow-hidden w-full max-w-4xl">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-1/2">
             <img
@@ -142,6 +159,7 @@ const Subscription = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
