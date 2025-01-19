@@ -18,6 +18,7 @@ import img4 from '../../assets/akij cement.png';
 import img5 from '../../assets/bike.jpg';
 import img6 from '../../assets/spa.webp';
 import img7 from '../../assets/bjit-limited-job-circular.webp';
+import useRole from '../../hooks/useRole'; // Import useRole hook
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,6 +27,9 @@ const ViewAllArticles = () => {
   const [selectedTag, setSelectedTag] = useState('');
   const [publishers, setPublishers] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false); 
+
+  // Get the user's role using useRole hook
+  const [role, isRoleLoading] = useRole(); 
 
   useEffect(() => {
     const fetchPublishers = async () => {
@@ -191,6 +195,7 @@ const ViewAllArticles = () => {
                   />
                   <div className="p-4">
                     <h3 className="text-xl font-semibold mb-2">{article.title}</h3>
+
                     {/* Writer and Publisher */}
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-sm text-gray-500">
@@ -221,12 +226,10 @@ const ViewAllArticles = () => {
                       {truncateDescription(article.description, 30)}
                     </p>
 
-                    <Link
-                      to={`/articles-details/${article._id}`}
-                      className={`btn w-full ${article.isPremium ? 'bg-amber-400' : 'bg-[#02faee]'}`}
-                    >
-                      See More
-                    </Link>
+                    <Link to={`/articles-details/${article._id}`}
+              className={`btn w-full ${article.isPremium ? 'bg-amber-400' : 'bg-[#02faee]'}`} disabled={role === 'viewer' && article.isPremium}>
+              See More
+            </Link>
                   </div>
                 </div>
               ))}
