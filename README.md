@@ -45,7 +45,7 @@ Developing **Pratiksha News (প্রতীক্ষা নিউজ)** was my 
 - **React-google-charts**
 - **React-countup**
 
-## Key Features of ProtiDour:
+## Key Features of Pratiksha News (প্রতীক্ষা নিউজ):
 1. **User Authentication & Authorization:**:  A user authentication system utilizing Firebase with email-password login, Google Sign-In, and JWT-protected routes enforcing role-based access control for Admin and User roles.
 
 2. **Article Management:** Users can submit articles with title, description, publisher, tags, and images, which require admin approval before publication
@@ -65,13 +65,15 @@ Developing **Pratiksha News (প্রতীক্ষা নিউজ)** was my 
 8. **Real-time Notifications:** SweetAlert/Toast notifications for successful CRUD operations, authentication, and subscription activities.
 
 9. **Enhanced User Experience:** The homepage features custom modal prompts for subscriptions after a 10-second delay, and the user experience is enhanced with loader animations during API calls and smooth navigation transitions.
-9. **Responsive Design:**Try to Fully responsive for mobile, tablet, and desktop views, including the admin dashboard.
+
+10. **Responsive Design:**Try to Fully responsive for mobile, tablet, and desktop views, including the admin dashboard.
 
 
 
 
 ### Video Walkthrough
-<!-- [![Watch the video](https://img.youtube.com/vi/pzFnB1zGSDg/0.jpg)](https://youtu.be/pzFnB1zGSDg) -->
+[![Watch the video](https://img.youtube.com/vi/IXiAqwAmBU4/0.jpg)](https://www.youtube.com/watch?v=IXiAqwAmBU4)
+
 
 
 
