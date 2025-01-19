@@ -85,7 +85,7 @@ const PremiumArticles = () => {
                     {premiumArticles.map((article) => (
                         <div
                             key={article._id}
-                            className="bg-[#d0f1f1]  cursor-pointer group rounded-xl shadow-lg border-y-8 border-teal-600 overflow-hidden"
+                            className="bg-amber-50  cursor-pointer group rounded-xl shadow-lg border-y-8 border-amber-400 overflow-hidden"
                         >
                             <img
                                 src={article.photoURL}
@@ -124,7 +124,7 @@ const PremiumArticles = () => {
                                     {truncateDescription(article.description, 30)}
                                 </p>
 
-                                <Link to={`/articles-details/${article._id}`} className="btn w-full bg-[#02faee]">
+                                <Link to={`/articles-details/${article._id}`} className="btn w-full bg-amber-400">
                                     See More
                                 </Link>
                             </div>
