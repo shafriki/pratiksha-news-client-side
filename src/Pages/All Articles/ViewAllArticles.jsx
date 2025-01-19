@@ -14,6 +14,14 @@ import LoadingSpinner from '../../Components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 import SubscriptionModal from '../../Components/Subscription Modal/SubscriptionModal'; 
 import { Helmet } from 'react-helmet-async';
+import img4 from '../../assets/akij cement.png';
+import img5 from '../../assets/bike.jpg';
+import img6 from '../../assets/spa.webp';
+import img7 from '../../assets/bjit-limited-job-circular.webp';
+
+
+
+
 
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -241,9 +249,13 @@ const ViewAllArticles = () => {
           <div className='mt-8 bg-[#f4f9f9] p-2'>
             <h1 className='font-semibold'>Featured Ads</h1>
             <div className='p-1 flex flex-col items-center gap-2'>
-              <img src={img1} alt="" />
-              <img src={img2} alt="" />
-              <img src={img3} alt="" />
+              <img src={img1} alt="add"/>
+              <img src={img2} alt="add" />
+              <img src={img3} alt="add" />
+              <img src={img4} alt="add" />
+              <img src={img5} alt="add" />
+              <img src={img6} alt="add" />
+              <img src={img7} alt="add" />
             </div>
           </div>
         </aside>
