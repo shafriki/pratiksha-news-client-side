@@ -36,7 +36,7 @@ const AllPublishers = () => {
 
       // Check if the response indicates success
       if (response?.data?.success) {  // Check if 'success' is true in the response
-        console.log("Publisher added successfully:", response.data);
+        // console.log("Publisher added successfully:", response.data);
         form.reset();  // Reset form after successful submission
         
         // Show SweetAlert in the center after successful submission

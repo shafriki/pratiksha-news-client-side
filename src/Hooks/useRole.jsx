@@ -15,7 +15,7 @@ const useRole = () => {
     },
   });
 
-  console.log('user role:',role);
+  // console.log('user role:',role);
   return [role, isLoading];
 };
 

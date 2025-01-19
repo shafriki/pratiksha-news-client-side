@@ -14,7 +14,6 @@ const UpdateArticle = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // Fetch article data with Authorization header
   const { data: articleData, isLoading, refetch } = useQuery({
     queryKey: ['article-details', id],
     queryFn: async () => {
@@ -27,22 +26,20 @@ const UpdateArticle = () => {
       return data;
     },
     onSuccess: (data) => {
-      // Pre-fill the form fields with the existing data
       setValue('title', data.title);
-      setValue('content', data.description); // Use the description field from MongoDB
-      setValue('image', data.photoURL); // Use the photoURL field from MongoDB
+      setValue('content', data.description); 
+      setValue('image', data.photoURL); 
     }
   });
 
-  // Handle form submission
   const onSubmit = async (data) => {
     const updatedArticleData = {
       ...data,
       authorName: user?.displayName,
       authorEmail: user?.email,
-      status: articleData.status,  // Assuming status remains unchanged
-      postedDate: articleData.postedDate, // Keep the original postedDate if necessary
-      views: articleData.views, // Keep the original view count if needed
+      status: articleData.status,  
+      postedDate: articleData.postedDate, 
+      views: articleData.views, 
     };
 
     try {
@@ -64,7 +61,7 @@ const UpdateArticle = () => {
         navigate('/my-articles');
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

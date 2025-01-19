@@ -36,7 +36,7 @@ const Publishers = () => {
         320: { slidesPerView: 1, spaceBetween: 15 },
         480: { slidesPerView: 2, spaceBetween: 15 },
         768: { slidesPerView: 3, spaceBetween: 25 },
-        1024: { slidesPerView: 4, spaceBetween: 30 }, // Add this line for 4 slides per view on larger screens
+        1024: { slidesPerView: 4, spaceBetween: 30 }, 
     }}
     spaceBetween={30}
     loop={true}

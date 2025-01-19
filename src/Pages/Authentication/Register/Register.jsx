@@ -37,7 +37,7 @@ const Register = () => {
     const password = form.password.value;
     const image = form.image.files[0];
 
-    console.log({ name, email, password, image });
+    // console.log({ name, email, password, image });
 
     // Password validation
     const uppercaseRegex = /[A-Z]/;
@@ -82,7 +82,7 @@ const Register = () => {
 
       // 3. Save username & profile photo
       await updateUserProfile(name, photoURL);
-      console.log(result);
+      // console.log(result);
 
       // Save user info in DB if the user is new
       await saveUser({ ...result?.user, displayName: name, photoURL });
@@ -91,7 +91,7 @@ const Register = () => {
         position: "top-center",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.message, {
         position: "top-center",
       });
@@ -109,7 +109,7 @@ const Register = () => {
         position: "top-center",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.message, {
         position: "top-center",
       });

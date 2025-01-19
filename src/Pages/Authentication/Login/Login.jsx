@@ -47,7 +47,7 @@ const Login = () => {
         timer: 2000,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',
@@ -69,7 +69,7 @@ const Login = () => {
         timer: 2000,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',

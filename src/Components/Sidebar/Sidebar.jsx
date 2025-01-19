@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   const logOut = () => {
     // Logic for logging out
-    console.log('Logging out');
+    // console.log('Logging out');
   };
 
   const getLinkClass = (path) => {

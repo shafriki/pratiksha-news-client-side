@@ -102,11 +102,9 @@ const CheckoutForm = () => {
                     }
                 )
                 .then((response) => {
-                    // Handle successful subscription creation
-                    console.log(response.data);
-                    // Refresh the page and navigate to home or confirmation page
+                    // console.log(response.data);
                     window.location.reload();
-                    navigate('/'); // Navigate to home or confirmation page
+                    navigate('/'); 
                 })
                 .catch(saveError => {
                     console.error('Error saving subscription:', saveError);
