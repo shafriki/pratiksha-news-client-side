@@ -9,6 +9,7 @@ import 'swiper/css/pagination';
 import { FreeMode, Pagination, Autoplay } from 'swiper/modules';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import LoadingSpinner from '../../../Components/LoadingSpinner';
 
 const Publishers = () => {
     const { data: publishers = [], isLoading } = useQuery({
@@ -22,7 +23,7 @@ const Publishers = () => {
     if (isLoading) {
         return (
             <div className="text-center my-10 md:my-20">
-                <span className="loading loading-bars loading-lg"></span>
+                <LoadingSpinner></LoadingSpinner>
             </div>
         );
     }

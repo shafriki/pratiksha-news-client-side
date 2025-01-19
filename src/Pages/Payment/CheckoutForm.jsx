@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import useAxiosSecure from '../../Hooks/useAxiousSecure';
 import useAuth from '../../Hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
+import Swal from 'sweetalert2'; 
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -42,13 +43,11 @@ const CheckoutForm = () => {
                 });
         }
 
-        // Check if the subscription has expired on page load
         if (user && user.subscriptionExpiry) {
             const expiryDate = new Date(user.subscriptionExpiry);
             if (expiryDate <= new Date()) {
                 setSubscriptionExpired(true);
-                // Optionally, update role to normal here if needed
-                // Make an API call to change the user role
+                
             }
         }
     }, [axiosSecure, subscriptionCost, authToken, user]);
@@ -86,31 +85,37 @@ const CheckoutForm = () => {
             setError('');
             setProcessing(false);
 
-            // Save subscription details in the database
-            axiosSecure
-                .post(
-                    '/subscriptions',
-                    {
-                        subscriptionPeriod,
-                        subscriptionCost,
-                        paymentIntentId: paymentIntent.id, // Pass the payment intent ID
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`,
+            Swal.fire({
+                title: 'Payment Successful!',
+                text: 'Your subscription has been successfully activated.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+            }).then(() => {
+                axiosSecure
+                    .post(
+                        '/subscriptions',
+                        {
+                            subscriptionPeriod,
+                            subscriptionCost,
+                            paymentIntentId: paymentIntent.id, 
                         },
-                    }
-                )
-                .then((response) => {
-                    // console.log(response.data);
-                    window.location.reload();
-                    navigate('/'); 
-                })
-                .catch(saveError => {
-                    console.error('Error saving subscription:', saveError);
-                    setError('Failed to save subscription. Please try again.');
-                    setProcessing(false);
-                });
+                        {
+                            headers: {
+                                Authorization: `Bearer ${authToken}`,
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        window.location.reload();
+                        navigate('/'); 
+                    })
+                    .catch(saveError => {
+                        console.error('Error saving subscription:', saveError);
+                        setError('Failed to save subscription. Please try again.');
+                        setProcessing(false);
+                    });
+            });
         }
     };
 
@@ -139,8 +144,8 @@ const CheckoutForm = () => {
                         },
                     }}
                 />
-                <p className="text-red-600">{error}</p>
-                {success && <p className="text-green-600">{success}</p>}
+                <p className="text-red-600 text-center">{error}</p>
+                {success && <p className="text-center text-green-600">{success}</p>}
                 <div className="flex items-center justify-center pt-10">
                     <button
                         className="btn md:px-10 bg-teal-600 hover:bg-teal-700 text-white"
