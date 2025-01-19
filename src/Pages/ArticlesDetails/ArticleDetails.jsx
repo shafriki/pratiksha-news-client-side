@@ -51,8 +51,8 @@ const ArticleDetails = () => {
       {/* parallax section */}
       <Parallax
         blur={{ min: -50, max: 50 }}
-        bgImage="https://i.ibb.co.com/wdM0rhy/newspapers-444453-1280.jpg"
-        bgImageAlt="the dog"
+        bgImage={article.photoURL}
+        bgImageAlt="article photourl"
         strength={-200}
       >
         <div className="hero-overlay h-[190px] md:h-[300px] bg-opacity-60 bg-cover bg-center bg-no-repeat text-[#02faee]">
@@ -71,7 +71,7 @@ const ArticleDetails = () => {
           <div>
             <div className="w-full overflow-hidden rounded-md">
               <img
-                className="object-cover w-full h-[35rem] group-hover:scale-110 transition"
+                className="object-cover w-full md:h-[35rem] group-hover:scale-110 transition"
                 src={article.photoURL}
                 alt="header image"
               />
