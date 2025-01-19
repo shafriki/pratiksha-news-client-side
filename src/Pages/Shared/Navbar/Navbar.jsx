@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';  
 import { Link, NavLink } from 'react-router-dom';
 import news from '../../../assets/logo (1).png';
-import { IoMdLogIn } from "react-icons/io";
+import { IoMdLogIn, IoMdMenu } from "react-icons/io";
 import { FaUserEdit } from "react-icons/fa";
 import avatarImg from '../../../assets/placeholder.jpg';
 import useAuth from '../../../Hooks/useAuth';
@@ -80,7 +80,8 @@ const Navbar = () => {
             <div className="navbar max-w-screen-xl mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden ">
+                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                            <IoMdMenu size={30} color="#2AB7B1" />
                         </div>
                         <ul
                             tabIndex={0}
@@ -91,15 +92,15 @@ const Navbar = () => {
                     <img src={news} alt="logo" className="w-6 md:w-10" />
                     <Link to='/' className="text-sm px-1 md:text-xl btn btn-ghost text-[#2AB7B1]">প্রতীক্ষা নিউজ</Link>
                 </div>
-                <div className="navbar-center  hidden lg:flex">
+                <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 gap-5">
                         {Links}
                     </ul>
                 </div>
-                <div className="navbar-end  flex gap-1 items-center">
+                <div className="navbar-end flex gap-1 items-center">
                     {user ? (
                         <>
-                            <div className="dropdown  z-10 dropdown-hover dropdown-bottom dropdown-end">
+                            <div className="dropdown z-10 dropdown-hover dropdown-bottom dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#2AB7B1] object-cover cursor-pointer" title={user.displayName}>
                                         
