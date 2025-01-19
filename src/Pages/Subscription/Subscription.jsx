@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import img from '../../assets/premium.png';
 import useRole from '../../hooks/useRole';
 import { Parallax } from 'react-parallax';
+import Swal from 'sweetalert2'; 
 
 const Subscription = () => {
   const { user, updateUserRole } = useContext(AuthContext);
@@ -18,22 +19,22 @@ const Subscription = () => {
     const period = event.target.value;
     setSubscriptionPeriod(period);
 
-    // Calculate cost and convert period to time (in minutes)
+    
     let cost = '';
     let periodInMinutes = 0;
 
     if (period === '1min') {
       cost = 10;
-      periodInMinutes = 0.5; // 30 seconds = 0.5 minutes
+      periodInMinutes = 0.5; 
     } else if (period === '1') {
       cost = 100;
-      periodInMinutes = 1440; // 1 day = 1440 minutes
+      periodInMinutes = 1440; 
     } else if (period === '5') {
       cost = 500;
-      periodInMinutes = 7200; // 5 days = 7200 minutes
+      periodInMinutes = 7200; 
     } else if (period === '10') {
       cost = 1000;
-      periodInMinutes = 14400; // 10 days = 14400 minutes
+      periodInMinutes = 14400; 
     }
 
     setSubscriptionCost(cost);
@@ -41,7 +42,12 @@ const Subscription = () => {
 
   const handleSubscribe = () => {
     if (!subscriptionPeriod) {
-      alert('Please select a subscription period.');
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please select a subscription period.',
+      });
       return;
     }
 
@@ -50,7 +56,7 @@ const Subscription = () => {
     let expiryTime = new Date();
 
     if (subscriptionPeriod === '1min') {
-      expiryTime = new Date(new Date().getTime() + 30 * 1000); // 30 seconds later
+      expiryTime = new Date(new Date().getTime() + 30 * 1000); 
     }
 
     // Set subscription expiry state and navigate to payment
@@ -59,12 +65,14 @@ const Subscription = () => {
   };
 
   useEffect(() => {
-    // If there is a subscription expiry time, start a timer to check it
     if (subscriptionExpiry) {
       const timer = setTimeout(() => {
-        // If expired, revert the user's role to 'viewer'
         updateUserRole('viewer');
-        alert('Your subscription has expired. You have been reverted to a viewer.');
+        Swal.fire({
+          icon: 'info',
+          title: 'Subscription Expired',
+          text: 'Your subscription has expired. You have been reverted to a viewer.',
+        });
         navigate('/');
       }, subscriptionExpiry - new Date());
 
@@ -152,7 +160,7 @@ const Subscription = () => {
             <button
               onClick={handleSubscribe}
               disabled={isAdmin} 
-              className={`bg-blue-500 btn text-white px-6 py-3 rounded hover:bg-blue-600 w-full ${isAdmin ? 'cursor-not-allowed opacity-50' : ''}`}
+              className={`bg-teal-500 btn text-white px-6 py-3 rounded hover:bg-teal-600 w-full ${isAdmin ? 'cursor-not-allowed opacity-50' : ''}`}
             >
               {isAdmin ? <p className='text-red-600'>Admin, no need to subscribe</p> : 'Subscribe'}
             </button>
