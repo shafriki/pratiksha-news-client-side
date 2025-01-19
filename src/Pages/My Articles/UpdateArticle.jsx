@@ -54,7 +54,7 @@ const UpdateArticle = () => {
       });
       if (response.data) {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: `Article Updated`,
           showConfirmButton: false,

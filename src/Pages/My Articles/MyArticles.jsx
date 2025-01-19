@@ -114,19 +114,19 @@ const MyArticles = () => {
                 <title>My Articles | প্রতীক্ষা নিউজ</title>
             </Helmet>
             <Parallax
-                    blur={{ min: -50, max: 50 }}
-                    bgImage="https://i.ibb.co.com/SfRz7q8/loginbg.jpg"
-                    bgImageAlt="the dog"
-                    strength={-200}
-                  >
-                    <div className="hero-overlay h-[190px] md:h-[300px] bg-opacity-60 bg-cover bg-center bg-no-repeat text-[#02faee]">
-                      <div className="relative max-w-7xl mx-auto py-8 px-3 md:py-16 md:px-6 text-left">
+                blur={{ min: -50, max: 50 }}
+                bgImage="https://i.ibb.co.com/SfRz7q8/loginbg.jpg"
+                bgImageAlt="the dog"
+                strength={-200}
+            >
+                <div className="hero-overlay h-[190px] md:h-[300px] bg-opacity-60 bg-cover bg-center bg-no-repeat text-[#02faee]">
+                    <div className="relative max-w-7xl mx-auto py-8 px-3 md:py-16 md:px-6 text-left">
                         <h1 className="font-bold text-lg md:text-4xl mt-20 md:mt-16 text-center">
-                          My All Articles Here
+                            My All Articles Here
                         </h1>
-                      </div>
                     </div>
-                  </Parallax>
+                </div>
+            </Parallax>
 
             <h2 className="text-xl md:text-3xl text-center font-bold my-10">My Articles</h2>
             {articles.length === 0 && <p className="text-center text-lg">You have not added any articles.</p>}
@@ -141,6 +141,7 @@ const MyArticles = () => {
                             <th>Posted Date</th>
                             <th>Actions</th>
                             <th>Reason</th> {/* New column for Reason */}
+                            <th>Premium</th> {/* New column for Premium */}
                         </tr>
                     </thead>
                     <tbody>
@@ -167,10 +168,10 @@ const MyArticles = () => {
                                         </button>
                                     </Link>
                                     <Link to={`/my-articles/update/${article._id}`}>
-    <button className="btn btn-xs bg-transparent text-green-600">
-        <MdOutlineEdit className='hidden md:block'/> Edit
-    </button>
-</Link>
+                                        <button className="btn btn-xs bg-transparent text-green-600">
+                                            <MdOutlineEdit className='hidden md:block'/> Edit
+                                        </button>
+                                    </Link>
 
                                     <button
                                         onClick={() => {
@@ -192,6 +193,7 @@ const MyArticles = () => {
                                         </button>
                                     )}
                                 </td>
+                                <td>{article.isPremium ? <p className='text-green-600'>Yes</p> : <p className='text-red-600'>No</p>}</td> {/* Premium column */}
                             </tr>
                         ))}
                     </tbody>
