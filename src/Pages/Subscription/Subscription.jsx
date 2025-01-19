@@ -1,14 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/premium.png';
 import { AuthContext } from '../../proviers/AuthProvider';
+import useRole from '../../hooks/useRole'; // Import the useRole hook
 
 const Subscription = () => {
     const { user } = useContext(AuthContext);
     const [subscriptionPeriod, setSubscriptionPeriod] = useState('');
     const [subscriptionCost, setSubscriptionCost] = useState('');
     const navigate = useNavigate();
+    const [role, isLoading] = useRole(); // Use the role hook to get user role
 
     const handlePeriodChange = (event) => {
         const period = event.target.value;
@@ -44,10 +46,11 @@ const Subscription = () => {
         // Get the current time in UTC (ISO format)
         const currentTimeUTC = new Date().toISOString();
 
-
         // Navigate to the payment page with subscription details
         navigate('/payment', { state: { subscriptionPeriod, subscriptionCost, currentTimeUTC } });
     };
+
+    const isAdmin = role === 'admin'; // Check if the user is an admin
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -119,9 +122,10 @@ const Subscription = () => {
                         </div>
                         <button
                             onClick={handleSubscribe}
-                            className="bg-blue-500 btn text-white px-6 py-3 rounded hover:bg-blue-600 w-full"
+                            disabled={isAdmin} // Disable the button if the user is an admin
+                            className={`bg-blue-500 btn text-white px-6 py-3 rounded hover:bg-blue-600 w-full ${isAdmin ? 'cursor-not-allowed opacity-50' : ''}`}
                         >
-                            Subscribe
+                            {isAdmin ? <p className='text-red-600'>Admin, no need to subscribe</p> : 'Subscribe'}
                         </button>
                     </div>
                 </div>
