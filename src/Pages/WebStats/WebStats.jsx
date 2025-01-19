@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CountUp from 'react-countup';
+import LoadingSpinner from '../../Components/LoadingSpinner';
 
 const WebStats = () => {
     const [stats, setStats] = useState({
@@ -11,18 +12,17 @@ const WebStats = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetching stats for users, viewers, and premium users
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                // Fetch total users
+                
                 const { data: totalUsersData } = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
-                // Fetch viewer users
+                
                 const { data: viewersData } = await axios.get(`${import.meta.env.VITE_API_URL}/viewer-users`);
-                // Fetch premium users
+                
                 const { data: premiumUsersData } = await axios.get(`${import.meta.env.VITE_API_URL}/premium-users`);
 
-                // Set the data in the state
+                
                 setStats({
                     totalUsers: totalUsersData.length,
                     viewers: viewersData.length,
@@ -41,7 +41,7 @@ const WebStats = () => {
     if (isLoading) {
         return (
             <div className="text-center my-10 md:my-20">
-                <span className="loading loading-bars loading-lg"></span>
+                <LoadingSpinner></LoadingSpinner>
             </div>
         );
     }
