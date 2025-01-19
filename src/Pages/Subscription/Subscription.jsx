@@ -23,7 +23,7 @@ const Subscription = () => {
 
     if (period === '1min') {
       cost = 10;
-      periodInMinutes = 1; // 1 minute
+      periodInMinutes = 0.5; // 30 seconds = 0.5 minutes
     } else if (period === '1') {
       cost = 100;
       periodInMinutes = 1440; // 1 day = 1440 minutes
@@ -46,7 +46,11 @@ const Subscription = () => {
 
     // Get the current time in UTC (ISO format)
     const currentTimeUTC = new Date().toISOString();
-    const expiryTime = new Date(new Date().getTime() + 1 * 60000); // 1 minute later for "1min" subscription
+    let expiryTime = new Date();
+
+    if (subscriptionPeriod === '1min') {
+      expiryTime = new Date(new Date().getTime() + 30 * 1000); // 30 seconds later
+    }
 
     // Set subscription expiry state and navigate to payment
     setSubscriptionExpiry(expiryTime);

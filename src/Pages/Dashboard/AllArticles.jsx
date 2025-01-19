@@ -30,6 +30,7 @@ const AllArticles = () => {
             return data.map(article => ({
                 ...article,
                 status: article.approved ? 'Approved' : article.approved === false ? 'Rejected' : 'Pending',
+                isPremium: article.isPremium || false, // Add premium status
             }));
         },
     });
@@ -110,6 +111,37 @@ const AllArticles = () => {
             });
     };
 
+    const handleMakePremium = (article) => {
+        const authToken = localStorage.getItem('authToken');
+        axiosSecure
+            .patch(`/articles-req/premium/${article._id}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+            .then(res => {
+                refetch();
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Article is now Premium!',
+                        showConfirmButton: false,
+                        timer: 1500,
+                    });
+                }
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Failed to make article premium!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            });
+    };
+
     const indexOfLastArticle = currentPage * itemsPerPage;
     const indexOfFirstArticle = indexOfLastArticle - itemsPerPage;
     const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
@@ -159,6 +191,7 @@ const AllArticles = () => {
                             <th>Publisher</th>
                             <th>Status</th>
                             <th>Action</th>
+                            <th>Premium</th> {/* New column for premium */}
                         </tr>
                     </thead>
                     <tbody>
@@ -224,6 +257,19 @@ const AllArticles = () => {
                                         </>
                                     )}
                                 </th>
+                                {/* Premium Button */}
+                                <td>
+                                    {article.isPremium ? (
+                                        <span className="text-green-600">Premium</span>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleMakePremium(article)}
+                                            className="btn btn-xs bg-blue-600 text-white"
+                                        >
+                                            Make Premium
+                                        </button>
+                                    )}
+                                </td>
                             </tr>
                         ))}
                     </tbody>
