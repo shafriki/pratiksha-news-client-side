@@ -44,9 +44,17 @@ const Navbar = () => {
 
                <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
                
-                <NavLink to='/premium-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Premium Articles</NavLink>
 
             </>
+        )}
+     {/* Only for admin or premium role */}
+     {(role === 'admin' || role === 'premium') && (
+            <NavLink 
+                to='/premium-articles' 
+                className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}
+            >
+                Premium Articles
+            </NavLink>
         )}
 
     {/* only for admin */}

@@ -20,7 +20,7 @@ const CheckoutForm = () => {
     const [success, setSuccess] = useState('');
     const [subscriptionExpired, setSubscriptionExpired] = useState(false);
 
-    const authToken = localStorage.getItem('authToken'); 
+    const authToken = localStorage.getItem('authToken');
 
     useEffect(() => {
         if (subscriptionCost) {
@@ -104,7 +104,9 @@ const CheckoutForm = () => {
                 .then((response) => {
                     // Handle successful subscription creation
                     console.log(response.data);
-                    navigate('/'); // Navigate to home or a confirmation page
+                    // Refresh the page and navigate to home or confirmation page
+                    window.location.reload();
+                    navigate('/'); // Navigate to home or confirmation page
                 })
                 .catch(saveError => {
                     console.error('Error saving subscription:', saveError);
