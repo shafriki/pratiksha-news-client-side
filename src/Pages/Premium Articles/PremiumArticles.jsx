@@ -72,20 +72,20 @@ const PremiumArticles = () => {
       >
         <div className="hero-overlay h-[190px] md:h-[300px] bg-opacity-60 bg-cover bg-center bg-no-repeat text-[#02faee]">
           <div className="relative max-w-7xl mx-auto py-8 px-3 md:py-16 md:px-6 text-left">
-            <h1 className="font-bold text-lg md:text-4xl mt-20 md:mt-16 text-center">
-              All Articles
+            <h1 className="font-bold text-2xl md:text-4xl mt-20 md:mt-16 text-center">
+              Premium Articles
             </h1>
           </div>
         </div>
       </Parallax>
 
             {/* Premium Articles Section */}
-            <div className="max-w-screen-xl mx-auto my-12">
+            <div className="max-w-screen-xl mx-3 md:mx-auto my-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {premiumArticles.map((article) => (
                         <div
                             key={article._id}
-                            className="bg-[#f4f9f9]  cursor-pointer group rounded-xl shadow-lg border-y-8 border-teal-600 overflow-hidden"
+                            className="bg-[#d0f1f1]  cursor-pointer group rounded-xl shadow-lg border-y-8 border-teal-600 overflow-hidden"
                         >
                             <img
                                 src={article.photoURL}
