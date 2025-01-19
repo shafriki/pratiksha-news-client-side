@@ -41,12 +41,12 @@ const Subscription = () => {
             return;
         }
 
-        // Save period in minutes to the database
-        // For example, save `periodInMinutes` and `subscriptionCost` in your backend
-        // You can use an API request to save the data in your DB
+        // Get the current time in UTC (ISO format)
+        const currentTimeUTC = new Date().toISOString();
+
 
         // Navigate to the payment page with subscription details
-        navigate('/payment', { state: { subscriptionPeriod, subscriptionCost } });
+        navigate('/payment', { state: { subscriptionPeriod, subscriptionCost, currentTimeUTC } });
     };
 
     return (

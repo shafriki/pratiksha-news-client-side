@@ -18,6 +18,7 @@ const CheckoutForm = () => {
     const [error, setError] = useState('');
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState('');
+    const [subscriptionExpired, setSubscriptionExpired] = useState(false);
 
     const authToken = localStorage.getItem('authToken'); 
 
@@ -40,7 +41,17 @@ const CheckoutForm = () => {
                     console.error('Error creating payment intent:', error);
                 });
         }
-    }, [axiosSecure, subscriptionCost, authToken]);
+
+        // Check if the subscription has expired on page load
+        if (user && user.subscriptionExpiry) {
+            const expiryDate = new Date(user.subscriptionExpiry);
+            if (expiryDate <= new Date()) {
+                setSubscriptionExpired(true);
+                // Optionally, update role to normal here if needed
+                // Make an API call to change the user role
+            }
+        }
+    }, [axiosSecure, subscriptionCost, authToken, user]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -82,9 +93,7 @@ const CheckoutForm = () => {
                     {
                         subscriptionPeriod,
                         subscriptionCost,
-                        paymentIntentId: paymentIntent.id,
-                        name: user.displayName,
-                        date: new Date(),
+                        paymentIntentId: paymentIntent.id, // Pass the payment intent ID
                     },
                     {
                         headers: {
@@ -92,18 +101,26 @@ const CheckoutForm = () => {
                         },
                     }
                 )
-                .then(() => {
-                    // Navigate to success or subscription confirmation page
-                    navigate('/');
+                .then((response) => {
+                    // Handle successful subscription creation
+                    console.log(response.data);
+                    navigate('/'); // Navigate to home or a confirmation page
                 })
                 .catch(saveError => {
                     console.error('Error saving subscription:', saveError);
+                    setError('Failed to save subscription. Please try again.');
+                    setProcessing(false);
                 });
         }
     };
 
     return (
         <div className="max-w-2xl my-10 p-10 mx-auto border rounded-md bg-teal-100">
+            {subscriptionExpired && (
+                <div className="text-red-600 mb-4">
+                    Your subscription has expired. Please renew to continue.
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <CardElement
                     className="border p-3 bg-white"
