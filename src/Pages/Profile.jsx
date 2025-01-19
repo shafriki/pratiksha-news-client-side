@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';  // Import SweetAlert2
 import { BeatLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const Profile = () => {
   const { user, logout } = useAuth();
@@ -34,7 +35,7 @@ const Profile = () => {
   if (isLoading) {
     return (
       <div className="text-center my-4 md:my-6">
-        <span className="loading loading-bars loading-lg"></span>
+        <LoadingSpinner></LoadingSpinner>
       </div>
     );
   }
@@ -59,12 +60,12 @@ const Profile = () => {
           icon: 'success',
           title: 'Profile Updated!',
           text: 'Your profile has been successfully updated.',
-          confirmButtonText: 'Okay',
-          confirmButtonColor: '#4CAF50',
+          showConfirmButton: false,
+          timer: 1500,
+          confirmButtonColor: '#008080',
         });
         setIsModalOpen(false);
 
-        // Refetch the user data after the profile is updated
         refetch();
       } else {
         Swal.fire({
@@ -84,7 +85,7 @@ const Profile = () => {
         confirmButtonColor: '#FF6F61',
       });
     } finally {
-      setLoading(false);  // Set loading to false after the update process
+      setLoading(false);  
     }
   };
 
@@ -92,7 +93,7 @@ const Profile = () => {
     <div className="min-h-screen">
       <Helmet>
                     <title>Profile | প্রতীক্ষা নিউজ</title>
-                  </Helmet>
+      </Helmet>
       {/* Detail info banner */}
       <Parallax
         blur={{ min: -50, max: 50 }}
@@ -106,12 +107,12 @@ const Profile = () => {
       </Parallax>
 
       {/* Details card */}
-      <div className="absolute top-[8rem] md:top-[12rem] left-[50%] transform -translate-x-1/2 bg-white bg-opacity-40 p-8 rounded-lg shadow-xl w-[40%] text-center backdrop-blur-md">
-        <div className="relative w-24 h-24 sm:w-28 sm:h-28 mx-auto mb-4">
+      <div className="absolute top-[8rem] md:top-[12rem] left-[50%] transform -translate-x-1/2 bg-white bg-opacity-40 p-8 rounded-lg shadow-xl w-[90%] sm:w-[60%] md:w-[40%] text-center backdrop-blur-md">
+        <div className="relative w-24 h-24 mx-auto mb-4">
           <img
             alt={fetchedUser?.name || user.name}
             src={fetchedUser?.image || "https://via.placeholder.com/150"} // Use the updated image URL from fetchedUser
-            className="w-full h-full rounded-full border-4 border-blue-500 object-cover"
+            className="w-full h-full rounded-full border-4 border-teal-500 object-cover"
           />
           <div className="absolute bottom-0 right-0 bg-green-500 rounded-full w-6 h-6 border-2 border-white"></div>
         </div>
@@ -124,13 +125,13 @@ const Profile = () => {
 
         <div className="flex justify-center gap-4 flex-wrap">
           <button
-            className="btn border-none bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="btn border-none bg-teal-500 text-white px-2 md:px-6 rounded-lg hover:bg-teal-600 transition duration-200"
             onClick={() => setIsModalOpen(true)}
           >
             Update Profile
           </button>
           <Link to='/'
-            className="btn md:px-10 bg-green-500 hover:bg-green-600 border-none text-white"
+            className="btn px-2 md:px-6 bg-green-500 hover:bg-green-600 border-none text-white"
           >
             Back To Home
           </Link>
