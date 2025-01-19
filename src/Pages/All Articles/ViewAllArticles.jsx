@@ -19,10 +19,6 @@ import img5 from '../../assets/bike.jpg';
 import img6 from '../../assets/spa.webp';
 import img7 from '../../assets/bjit-limited-job-circular.webp';
 
-
-
-
-
 const ViewAllArticles = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
@@ -105,7 +101,6 @@ const ViewAllArticles = () => {
 
   return (
     <div>
-      
       <Helmet>
         <title>All Articles | প্রতীক্ষা নিউজ</title>
       </Helmet>
@@ -187,7 +182,7 @@ const ViewAllArticles = () => {
               {filteredArticles.map((article) => (
                 <div
                   key={article._id}
-                  className="bg-[#f4f9f9] cursor-pointer group rounded-lg shadow-lg overflow-hidden"
+                  className={`bg-[#f4f9f9] cursor-pointer group rounded-lg shadow-lg overflow-hidden ${article.isPremium ? 'bg-amber-50 border-y-8 border-amber-500' : ''}`}
                 >
                   <img
                     src={article.photoURL}
@@ -226,8 +221,12 @@ const ViewAllArticles = () => {
                       {truncateDescription(article.description, 30)}
                     </p>
 
-                    <Link to={`/articles-details/${article._id}`} className="btn w-full bg-[#02faee]">See More</Link>
-
+                    <Link
+                      to={`/articles-details/${article._id}`}
+                      className={`btn w-full ${article.isPremium ? 'bg-amber-400' : 'bg-[#02faee]'}`}
+                    >
+                      See More
+                    </Link>
                   </div>
                 </div>
               ))}
