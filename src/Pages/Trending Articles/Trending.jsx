@@ -93,6 +93,8 @@ const Trending = () => {
                                         <div className="divider divider-info"></div>
                                         <p className='text-base text-white mb-1'><IoNewspaperSharp className='inline-block mr-1'  />
                                         Publisher: {article.publisher} </p>
+                                        <p className='text-base text-white mb-1'><HiMiniEye className='inline-block mr-1'  />
+                                        Views: {article.viewCount} </p>
                                         <p className='text-base text-white'><BsFillCalendarDateFill className='inline-block mr-1'  />
                                         Post Date: {article.postedDate} </p>
                                         <div className='flex items-center gap-5 my-1'>
@@ -100,13 +102,10 @@ const Trending = () => {
                                         Reporter: {article.authorName} </p>
                                         <img src={article.authorPhotoURL} alt="reporter" className='rounded-full w-7 h-7 group-hover:scale-110 transition' /> 
                                         </div>
-
-                                        <p className='text-base text-gray-500 mb-4'><HiMiniEye className='inline-block mr-1' />
-                                        Views: {article.viewCount} </p>
                                         
                                         <div className="card-actions justify-end">
                                             
-                                            <Link to={`/articles-details/${article._id}`} className="btn bg-[#02faee] hover:bg-[#01a69e] border-none text-gray-700 w-full">See More</Link>
+                                            <Link to={`/articles-details/${article._id}`} className="btn bg-[#02faee] mt-3 hover:bg-[#01a69e] border-none text-gray-700 w-full">See More</Link>
                                         </div>
                                     </div>
                                 </div>
