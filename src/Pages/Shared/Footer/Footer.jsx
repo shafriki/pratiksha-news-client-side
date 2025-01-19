@@ -46,12 +46,12 @@ const Footer = () => {
                 {/* navlink section */}
                 <nav>
                     <h6 className="footer-title text-[#2AB7B1]">প্রতীক্ষা নিউজ</h6>
-                    <Link to='/marathons' className="link link-hover">Home</Link>
-                    <Link to='/marathons' className="link link-hover">Add Articles</Link>
-                    <Link to='add-marathons' className="link link-hover">All Articles</Link>
-                    <Link to='my-marathons' className="link link-hover">Subscription</Link>
-                    <Link to='/my-apply' className="link link-hover">My Articles</Link>
-                    <Link to='/my-apply' className="link link-hover">Premium Articles</Link>
+                    <Link  className="link link-hover">Home</Link>
+                    <Link  className="link link-hover">Add Articles</Link>
+                    <Link  className="link link-hover">All Articles</Link>
+                    <Link  className="link link-hover">Subscription</Link>
+                    <Link  className="link link-hover">My Articles</Link>
+                    <Link  className="link link-hover">Premium Articles</Link>
                 </nav>
 
                 {/* legal condition section */}
