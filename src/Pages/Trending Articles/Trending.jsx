@@ -57,7 +57,7 @@ const Trending = () => {
             </div>
 
             <div className="relative z-10">
-                <h2 className="text-xl md:text-3xl font-bold text-center mb-8 text-white">Trending Articles</h2>
+                <h2 className="text-2xl md:text-4xl font-bold text-center mb-8 text-white">Trending Articles</h2>
                 <div className='max-w-screen-xl mx-auto'>
                     <Swiper
                         breakpoints={{

@@ -10,9 +10,9 @@ const Plans = () => {
         <div className='flex flex-col relative mb-[64rem] md:mb-[30rem] items-center'>
             {/* banner section */}
             <div className='min-h-[14rem]  w-full bg-slate-800'>
-                <h1 className='text-3xl bg-opacity-80 text-white font-bold py-2 text-center bg-[#2AB7B1] mt-10'>Subcription Plan</h1>
+                <h1 className='text-2xl md:text-4xl bg-opacity-80 text-white font-bold py-2 text-center bg-[#2AB7B1] mt-10'>Subcription Plan</h1>
 
-                <p className='text-sm text-white text-center mt-4'>Revolutionize your news experience with trending articles, premium features, seamless design, and unlimited possibilities!</p>
+                <p className='text-sm md:text-base text-white text-center mt-4'>Revolutionize your news experience with trending articles, premium features, seamless design, and unlimited possibilities!</p>
             </div>
 
             {/* cards section */}

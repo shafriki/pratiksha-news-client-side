@@ -30,7 +30,7 @@ const Publishers = () => {
     return (
         <div>
             <div className="max-w-screen-xl mx-5 md:mx-auto my-16">
-            <h2 className="text-xl md:text-3xl font-bold text-center mb-8">All Publishers</h2>
+            <h2 className="text-2xl md:text-4xl font-bold text-center mb-8">All Publishers</h2>
             <Swiper
     breakpoints={{
         320: { slidesPerView: 1, spaceBetween: 15 },
