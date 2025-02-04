@@ -69,7 +69,13 @@ Developing **Pratiksha News (প্রতীক্ষা নিউজ)** was my 
 
 10. **Responsive Design:** Try to Fully responsive for mobile, tablet, and desktop views, including the admin dashboard.
 
-
+## Installation
+- Ensure you have Node.js, npm or yarn, and Git installed.
+- Clone the repository: git clone https://github.com/shafriki/pratiksha-news-client-side.git
+- cd pratiksha-news-client-side file
+- Install dependencies: npm install
+- Set up frontend environment variables (Firebase config): Create a .env file 
+- Run the frontend: npm run dev
 
 
 ### Video Walkthrough
