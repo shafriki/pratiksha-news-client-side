@@ -13,6 +13,18 @@ const Navbar = () => {
     const { user, logOut } = useAuth();
     const [role, isLoading] = useRole();
     const [userData, setUserData] = useState(null); 
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');  // Add theme state
+
+    // Toggle theme on checkbox change
+    const handleThemeToggle = (e) => {
+        const newTheme = e.target.checked ? 'dark' : 'light';
+        setTheme(newTheme);
+    };
+
+    useEffect(() => {
+        localStorage.setItem('theme', theme);
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [theme]);
 
     useEffect(() => {
         if (user) {
@@ -31,26 +43,19 @@ const Navbar = () => {
     }, [user]);
 
     const Links = <>
-    <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
-    
-    <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
-
-    <NavLink to='/contact' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Contact Us</NavLink>
-   
-    {/* after login user navlik */}
-    {user && (
+        <NavLink to='/' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Home</NavLink>
+        <NavLink to='/all-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>All Articles</NavLink>
+        <NavLink to='/contact' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Contact Us</NavLink>
+        {/* after login user navlink */}
+        {user && (
             <>
-               <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
-
-               <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
-
-               <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
-               
-
+                <NavLink to='/add-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Add Articles</NavLink>
+                <NavLink to='/subscriptions' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Subscription</NavLink>
+                <NavLink to='/my-articles' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>My Articles</NavLink>
             </>
         )}
-     {/* Only for admin or premium role */}
-     {(role === 'admin' || role === 'premium') && (
+        {/* Only for admin or premium role */}
+        {(role === 'admin' || role === 'premium') && (
             <NavLink 
                 to='/premium-articles' 
                 className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}
@@ -58,12 +63,11 @@ const Navbar = () => {
                 Premium Articles
             </NavLink>
         )}
-
-    {/* only for admin */}
-    {role === 'admin' && (
-        <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
-    )}
-</>;
+        {/* only for admin */}
+        {role === 'admin' && (
+            <NavLink to='/dashboard' className={({ isActive }) => isActive ? 'font-bold text-[#2AB7B1]' : 'text-[#ECF0F1]'}>Dashboard</NavLink>
+        )}
+    </>;
 
     const handleLogout = () => {
         logOut();
@@ -78,7 +82,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className='bg-gradient-to-r from-[#070A16] via-[#070A16] to-[#070A16] text-white fixed z-50 w-full backdrop-blur opacity-80 md:py-1'>
+        <div className={`bg-gradient-to-r from-[#070A16] via-[#070A16] to-[#070A16] text-white fixed z-50 w-full backdrop-blur opacity-80 md:py-1 ${theme === 'dark' ? 'bg-dark' : 'bg-light'}`}>
             <div className="navbar max-w-screen-xl mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -100,12 +104,20 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end flex gap-1 items-center">
+                    <label className="cursor-pointer grid place-items-center">
+                        <input 
+                            type="checkbox" 
+                            onChange={handleThemeToggle} 
+                            checked={theme === "dark"} 
+                            className="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2" 
+                        />
+                    </label>
+
                     {user ? (
                         <>
                             <div className="dropdown z-10 dropdown-hover dropdown-bottom dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#2AB7B1] object-cover cursor-pointer" title={user.displayName}>
-                                        
                                         <img alt={user.displayName} src={userData?.image || user.photoURL || avatarImg} />
                                     </div>
                                 </div>
