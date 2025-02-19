@@ -5,7 +5,8 @@ import logo from '../../assets/logo (1).png';
 
 const SeeAll = () => {
   return (
-    <Parallax
+    <div className="my-16">
+      <Parallax
       blur={{ min: -50, max: 50 }}
       bgImage={img}
       bgImageAlt="background image"
@@ -34,6 +35,7 @@ const SeeAll = () => {
         </div>
       </div>
     </Parallax>
+    </div>
   );
 };
 
