@@ -124,7 +124,7 @@ const PremiumArticles = () => {
                                     {truncateDescription(article.description, 30)}
                                 </p>
 
-                                <Link to={`/articles-details/${article._id}`} className="btn w-full bg-amber-400">
+                                <Link to={`/articles-details/${article._id}`} className="btn border-none w-full bg-amber-400">
                                     See More
                                 </Link>
                             </div>
