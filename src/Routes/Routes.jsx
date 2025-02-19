@@ -21,6 +21,7 @@ import ErrorPage from "../Pages/Error Page/ErrorPage";
 import Payment from "../Pages/Payment/Payment";
 import Details from "../Pages/My Articles/Details";
 import UpdateArticle from "../Pages/My Articles/UpdateArticle";
+import ContactUs from "../Pages/ContactUs/ContactUs";
 
 export const router = createBrowserRouter([
 
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>
+      },
+      {
+        path: '/contact',
+        element: <ContactUs></ContactUs>
       },
       {
         path: '/payment',
