@@ -75,15 +75,15 @@ const Footer = () => {
                     {/* social icons */}
                     <nav className=''>
                         <div className="grid grid-flow-col gap-2 md:gap-4 justify-center">
-                            <a><FaSquareFacebook className='text-2xl md:text-3xl text-[#2AB7B1] '/></a>
+                            <a><FaSquareFacebook className='text-2xl cursor-pointer md:text-3xl text-[#2AB7B1] '/></a>
 
-                            <a><FaSquareInstagram className='text-2xl md:text-3xl text-[#2AB7B1]'/></a>
+                            <a><FaSquareInstagram className='text-2xl cursor-pointer md:text-3xl text-[#2AB7B1]'/></a>
 
-                            <a><IoLogoYoutube className='text-2xl md:text-3xl text-[#2AB7B1]'/></a>
+                            <a><IoLogoYoutube className='text-2xl cursor-pointer md:text-3xl text-[#2AB7B1]'/></a>
 
-                            <a><IoLogoLinkedin className='text-2xl md:text-3xl text-[#2AB7B1]'/></a>
+                            <a><IoLogoLinkedin className='text-2xl cursor-pointer md:text-3xl text-[#2AB7B1]'/></a>
 
-                            <a><IoLogoTwitter className='text-2xl md:text-3xl text-[#2AB7B1]'/></a>
+                            <a><IoLogoTwitter className='text-2xl cursor-pointer md:text-3xl text-[#2AB7B1]'/></a>
                         </div>
                     </nav>                    
                     </footer>
