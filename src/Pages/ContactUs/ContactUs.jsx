@@ -30,8 +30,8 @@ const ContactUs = () => {
                         { title: "Phone", info: "+880 1234 567 890" },
                         { title: "Address", info: "Uttara, Dhaka, Bangladesh" }
                     ].map((item, index) => (
-                        <div key={index} className="text-center p-6 border rounded-lg shadow-md bg-white hover:shadow-lg transition">
-                            <h3 className="font-semibold text-xl text-[#02faee] mb-2">{item.title}</h3>
+                        <div key={index} className="text-center p-6 border rounded-lg shadow-md bg-[#e3f8f7] hover:shadow-lg transition">
+                            <h3 className="font-semibold text-xl text-[#043734] mb-2">{item.title}</h3>
                             <p className="text-gray-600 text-lg">{item.info}</p>
                         </div>
                     ))}
